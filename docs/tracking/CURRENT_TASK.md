@@ -4,23 +4,15 @@
 
 ## Tiket Aktif Saat Ini
 
-**ID:** FEAT-0005
-**Judul:** Kickoff EPIC-005 — Knowledge Base / Notes
-**File Lengkap:** *(belum dibuat — buat di awal sesi berikutnya)*
-**EPIC Induk:** EPIC-005 — Knowledge Base / Notes
+**ID:** FEAT-0006
+**Judul:** Kickoff EPIC Berikutnya (EPIC-006 Deadline Reminder atau EPIC-007 Habit Tracking)
+**File Lengkap:** *(belum dibuat — tentukan prioritas dulu dari PROJECT_CONTEXT.md)*
 **Status:** `To Do`
 
-> EPIC-004 (Projects & Goals) selesai penuh. Sprint 6 dimulai dengan kickoff EPIC-005: baca FSD Modul 4 (Knowledge Base/Notes), Database Spec A.6, pecah EPIC-005 menjadi TASK granular. Sambungkan juga `CreatesNoteFromInbox` contract dari EPIC-002.
+> EPIC-005 (Dashboard) selesai penuh. Sebelum memulai sesi berikutnya, baca `docs/context/PROJECT_CONTEXT.md` untuk menentukan urutan EPIC yang benar: apakah EPIC-006 (Deadline Reminder) atau EPIC-007 (Habit Tracking) yang dikerjakan lebih dulu.
 
-## Langkah Kickoff
+## Sebelum Mulai
 
-1. Buat tiket `tickets/features/FEAT-0005-kickoff-notes.md`
-2. Baca FSD Modul 4 (Notes/Knowledge Base)
-3. Baca Database Spec A.6 (notes)
-4. Pecah EPIC-005 menjadi TASK: migration+model, factory+policy+actions+tests, Livewire+feature tests+seeder
-5. Sambungkan `CreatesNoteFromInbox` contract ke implementasi nyata
-6. Perbarui NEXT_TASK.md dengan antrian Sprint 6
-
----
-
-*Setelah kickoff selesai: TASK pertama Sprint 6 menjadi CURRENT_TASK yang baru.*
+- [ ] Baca `docs/context/PROJECT_CONTEXT.md` — Sprint Map
+- [ ] Baca tiket EPIC-006 dan EPIC-007 untuk memahami scope + dependency masing-masing
+- [ ] Pilih EPIC yang lebih kecil atau lebih bebas dependency sebagai Sprint 7

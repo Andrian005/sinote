@@ -23,6 +23,36 @@
 
 ---
 
+## Sesi — 2026-07-26 (Sesi 18)
+
+- **Target:** Menyelesaikan TASK-0017 — DashboardToday component, stats bar, today tasks aggregation, Habit placeholder, feature tests. Menyelesaikan EPIC-005.
+- **Ticket:** TASK-0017
+- **Progress:** TASK-0017 selesai 100% dan EPIC-005 selesai penuh. DashboardToday component (getTodayTasksProperty + getStatsProperty + #[On task-saved/project-saved]). dashboard-today.blade.php (stats bar 3 angka, Quick Capture embed, Today task list + priority/status badge + due_date highlight, Projects embed, Habit placeholder). dashboard.blade.php disederhanakan menjadi single `<livewire:dashboard.dashboard-today />` embed. 11 feature tests DashboardTodayTest.
+- **Kendala:** `orWhere('due_date', '<=', now()->toDateString())` tidak mengembalikan result di SQLite testing karena date column comparison behavior berbeda.
+- **Solusi:** Ganti ke `orWhereDate('due_date', '<=', now()->toDateString())` — Laravel `whereDate()` menggunakan `DATE()` function yang konsisten di SQLite dan PostgreSQL.
+- **Keputusan:** `whereDate()` digunakan untuk semua perbandingan date column di query agar konsisten antara SQLite (testing) dan PostgreSQL (production).
+- **File yang Berubah:** `app/Livewire/Dashboard/DashboardToday.php` (baru), `resources/views/livewire/dashboard/dashboard-today.blade.php` (baru), `resources/views/dashboard.blade.php` (disederhanakan), `tests/Feature/Dashboard/DashboardTodayTest.php` (baru, 11 tests), `tickets/tasks/TASK-0017-dashboard-today-view.md` (status→Done), `tickets/epics/EPIC-005-dashboard.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→FEAT-0006), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md`
+- **Testing:** `php artisan test --filter=DashboardToday` → 11 passed; `php artisan test` → 313 passed (428 assertions); `vendor/bin/pint` → 1 fix (DashboardTodayTest imports), clean.
+- **Catatan:** EPIC-005 (Dashboard/Today View) selesai penuh — 1 TASK saja. Dashboard sekarang menampilkan: stats bar (Task aktif/Project aktif/Inbox unprocessed), Quick Capture, Today tasks (hanya hari ini + overdue + no-deadline, limit 7), Projects widget, Habit placeholder. Navigation primer sekarang: Today, Inbox, Projects & Goals (3/6 item Blueprint).
+- **Next Session:** FEAT-0006 — Kickoff EPIC berikutnya. Cek prioritas: EPIC-006 (Deadline Reminder) atau EPIC-007 (Habit Tracking). Baca `docs/context/PROJECT_CONTEXT.md` sprint map untuk urutan yang benar.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 17)
+
+- **Target:** FEAT-0005 — Kickoff EPIC-005 (Dashboard/Today View): koreksi mapping EPIC (EPIC-005 = Dashboard, bukan Notes), baca FSD Modul 5.1, buat tiket FEAT-0005 + TASK-0017, commit+push EPIC-004.
+- **Ticket:** FEAT-0005
+- **Progress:** FEAT-0005 selesai 100%. Teridentifikasi bahwa NEXT_TASK.md sebelumnya salah menulis "EPIC-005 (Knowledge Base/Notes)" — EPIC-005 sebenarnya adalah Dashboard/Today View, dan Notes ada di EPIC-008. FEAT-0005 dibuat (kickoff, Done). TASK-0017 dibuat (DashboardToday component + aggregation logic + 11+ feature tests). NEXT_TASK.md diperbarui Sprint 6. Commit+push EPIC-004 berhasil (71 files, `53da63e..c5b1c85`).
+- **Kendala:** Mapping EPIC di NEXT_TASK.md sebelumnya salah — "Sprint 6: EPIC-005 (Knowledge Base/Notes)" padahal EPIC-005 = Dashboard, Notes = EPIC-008.
+- **Solusi:** Koreksi saat membaca EPIC list di `tickets/epics/`. Tiket dibuat untuk EPIC-005 yang benar.
+- **Keputusan:** EPIC-005 dipecah menjadi **1 TASK** (bukan 3) karena tidak ada migration/enum/model baru — semua data tersedia dari sprint sebelumnya. DashboardToday component hanya mengagregasi data yang sudah ada.
+- **File yang Berubah:** `tickets/features/FEAT-0005-kickoff-dashboard.md` (baru, Done), `tickets/tasks/TASK-0017-dashboard-today-view.md` (baru), `docs/tracking/CURRENT_TASK.md` (→TASK-0017), `docs/tracking/NEXT_TASK.md` (Sprint 6), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** Tidak ada testing — commit/push EPIC-004 + pembuatan tiket.
+- **Catatan:** Setelah EPIC-005 selesai, sprint berikutnya adalah EPIC-006 (Deadline Reminder) atau EPIC-007 (Habit Tracking) sesuai prioritas. Kedua EPIC tersebut perlu migration baru.
+- **Next Session:** Kerjakan TASK-0017 — DashboardToday component, stats bar, Habit placeholder, feature tests. Baca tiket dan FSD Modul 5.1 sebelum mulai.
+
+---
+
 ## Sesi — 2026-07-26 (Sesi 16)
 
 - **Target:** Menyelesaikan TASK-0016 — Livewire GoalForm + GoalList + ProjectForm + ProjectList, halaman /goals + /projects, nav update, Dashboard widget, GoalSeeder + ProjectSeeder, 44 feature tests. Menyelesaikan EPIC-004.

@@ -14,6 +14,8 @@
 
 ## [Unreleased]
 
+- dashboard: add DashboardToday Livewire component, stats bar, today tasks aggregation, 11 feature tests — EPIC-005 complete (TASK-0017)
+- dashboard: plan EPIC-005 sprint — create TASK-0017 ticket (FEAT-0005)
 - projects: add GoalForm + GoalList + ProjectForm + ProjectList Livewire components, /goals + /projects routes, dashboard widget, nav update, GoalSeeder + ProjectSeeder, 42 feature tests — EPIC-004 complete (TASK-0016)
 - projects: add GoalFactory, ProjectFactory, GoalPolicy, ProjectPolicy, form requests, actions, RecalculateProjectProgress, update listener, 69 unit tests (TASK-0015)
 - projects: add goals + projects migrations, GoalType/GoalStatus/ProjectStatus enums, Goal + Project models, resolve D-009 FK tasks.project_id (TASK-0014)

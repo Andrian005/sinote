@@ -6,7 +6,8 @@
 - **Dependency:** EPIC-003 (Tasks), EPIC-004 (Projects & Goals).
 - **Priority:** Must Have — MVP 1.
 - **Estimasi:** 3–4 hari.
-- **Status:** `Backlog`
+- **Status:** `Done`
+- **Selesai:** 2026-07-26
 
 ## Acceptance Criteria
 

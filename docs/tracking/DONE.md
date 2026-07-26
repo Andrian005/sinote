@@ -15,6 +15,25 @@
 
 ---
 
+### EPIC-005 — Dashboard / Today View
+- Selesai: 2026-07-26
+- File: `tickets/epics/EPIC-005-dashboard.md`
+- Catatan singkat: 1 TASK (TASK-0017) — DashboardToday component (getTodayTasksProperty: whereDate+whereNull, limit 7; getStatsProperty: 3 COUNT queries; #[On task-saved/project-saved]), stats bar 3 angka, Habit placeholder, update dashboard.blade.php menjadi single embed. Fix: `whereDate()` bukan `where()` untuk SQLite compatibility. 313 tests (428 assertions) hijau.
+
+### TASK-0017 — DashboardToday Component, Today Aggregation, Feature Tests
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0017-dashboard-today-view.md`
+- Catatan singkat: DashboardToday component dengan getTodayTasksProperty (whereDate <= today OR null, limit 7, priority DESC), getStatsProperty (3 COUNT queries), stats bar blade, Habit placeholder, dashboard.blade.php diringkas menjadi single embed; 11 feature tests. Fix SQLite: whereDate() bukan where() untuk perbandingan date. 313 tests hijau, pint clean.
+
+---
+
+### FEAT-0005 — Kickoff EPIC-005 (Dashboard / Today View) — Pemecahan Menjadi TASK
+- Selesai: 2026-07-26
+- File: `tickets/features/FEAT-0005-kickoff-dashboard.md`
+- Catatan singkat: EPIC-005 dipecah menjadi 1 TASK saja (TASK-0017 — DashboardToday component) karena tidak ada migration baru; semua data sudah ada dari EPIC-002/003/004. NEXT_TASK.md diperbarui Sprint 6; TASK-0017 menjadi tiket aktif.
+
+---
+
 ### EPIC-004 — Projects & Goals
 - Selesai: 2026-07-26
 - File: `tickets/epics/EPIC-004-projects-goals.md`
