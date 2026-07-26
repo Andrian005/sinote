@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Domain\Inbox\Models\InboxItem;
 use App\Domain\Shared\Models\Tag;
 use App\Domain\Shared\Models\User;
+use App\Domain\Tasks\Models\Task;
 use App\Policies\InboxItemPolicy;
 use App\Policies\TagPolicy;
+use App\Policies\TaskPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         InboxItem::class => InboxItemPolicy::class,
         Tag::class => TagPolicy::class,
+        Task::class => TaskPolicy::class,
         User::class => UserPolicy::class,
     ];
 

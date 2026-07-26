@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TagSeeder::class,
             InboxItemSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

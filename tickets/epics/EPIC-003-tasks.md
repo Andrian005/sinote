@@ -6,7 +6,8 @@
 - **Dependency:** EPIC-000, EPIC-001, EPIC-002 (sebagai sumber konversi).
 - **Priority:** Must Have — MVP 0/1.
 - **Estimasi:** 4–6 hari.
-- **Status:** `Backlog`
+- **Status:** `Done`
+- **Selesai:** 2026-07-26
 
 ## Acceptance Criteria
 

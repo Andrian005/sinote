@@ -15,6 +15,39 @@
 
 ---
 
+### EPIC-003 — Tasks (Unit Eksekusi Harian)
+- Selesai: 2026-07-26
+- File: `tickets/epics/EPIC-003-tasks.md`
+- Catatan singkat: EPIC lengkap — 3 TASK (TASK-0011, TASK-0012, TASK-0013). State machine todo/in_progress/done/archived, Event TaskCompleted, CreatesTaskFromInbox contract tersambung, 21 feature tests baru → total 189 tests (275 assertions) hijau, pint clean.
+
+### TASK-0013 — Livewire TaskForm + TaskList + Feature Tests + TaskSeeder
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0013-livewire-task-ui-feature-tests-seeder.md`
+- Catatan singkat: TaskForm (create/edit, #[Validate], dispatch task-saved), TaskList (filter active/done/archived, limit widget mode, pagination 15, #[On task-saved], Gate check), halaman /tasks, Dashboard widget TaskList limit=5, nav link Tasks sementara, TaskSeeder (5 todo+3 in_progress+3 done+2 archived), 8 TaskFormTest + 13 TaskListTest = 21 feature tests.
+
+---
+
+### TASK-0012 — TaskFactory, TaskPolicy, Form Requests, Actions, Event + Unit Tests
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0012-factory-policy-actions-events-task.md`
+- Catatan singkat: TaskFactory (11 state methods), TaskPolicy (7 methods), StoreTaskRequest + UpdateTaskRequest + UpdateTaskStatusRequest, InvalidTaskTransitionException, 4 Actions (CreateTask/UpdateTask/UpdateTaskStatus/ArchiveTask dengan state machine via `TaskStatus::allowedTransitions()`), Event TaskCompleted + Listener UpdateProjectProgress stub (daftar via EventServiceProvider + withProviders), CreateTaskFromInbox (implementasi nyata contract EPIC-002 + bind di AppServiceProvider); 54 unit tests baru → total 168 tests (249 assertions) hijau, pint clean.
+
+---
+
+### TASK-0011 — Migration `tasks`, Enum TaskStatus + TaskPriority, Model Task
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0011-migration-model-task.md`
+- Catatan singkat: Migration tasks (project_id tanpa FK constraint sementara — D-009), composite index (user_id,status,due_date), FK user_id restrict; Enum TaskStatus (4 cases + allowedTransitions/isActive) + TaskPriority (3 cases + weight/badgeClass/label); Model Task dengan cast, 7 scopes, relasi user/project/tags; 114 tests tetap hijau, pint clean.
+
+---
+
+### FEAT-0003 — Kickoff EPIC-003 (Tasks) — Pemecahan Menjadi TASK
+- Selesai: 2026-07-26
+- File: `tickets/features/FEAT-0003-kickoff-tasks.md`
+- Catatan singkat: EPIC-003 dipecah menjadi TASK-0011 (migration+enum+model Task), TASK-0012 (factory+policy+actions+event+unit tests+CreatesTaskFromInbox), TASK-0013 (Livewire+feature tests+seeder); NEXT_TASK.md diperbarui Sprint 4; TASK-0011 menjadi tiket aktif.
+
+---
+
 ### EPIC-002 — Inbox / Capture (Quick Capture & Triage)
 - Selesai: 2026-07-26
 - File: `tickets/epics/EPIC-002-inbox.md`

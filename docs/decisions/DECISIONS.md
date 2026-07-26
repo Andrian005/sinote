@@ -64,4 +64,12 @@
 - Sumber: diputuskan selama implementasi.
 - Status: Final.
 
+### D-009 — FK `project_id` di Tabel `tasks` Tanpa Constraint Sementara
+- Tanggal: 2026-07-26
+- Konteks: TASK-0011 membuat tabel `tasks` yang memiliki kolom `project_id` (nullable), namun tabel `projects` belum ada — baru akan dibuat di EPIC-004.
+- Keputusan: Kolom `project_id` dibuat sebagai plain ULID dengan `->index()` saja, tanpa FK constraint ke `projects.id`. Constraint akan ditambahkan via ALTER TABLE migration terpisah di EPIC-004.
+- Alasan: Menghindari dependency tabel yang belum ada tanpa menciptakan tabel `projects` stub yang setengah jadi. Pendekatan ini lebih bersih daripada stub kosong karena tidak menimbulkan ambiguitas saat EPIC-004 mulai mengisi tabel tersebut.
+- Implikasi: Selama EPIC-003 berjalan, `project_id` di Task bersifat informatif — tidak ada referential integrity di DB level, namun ownership divalidasi di Application layer (Action `CreateTask`).
+- Status: Final, akan di-resolve di EPIC-004.
+
 *(Kosong — diisi seiring proyek berjalan. Setiap entri baru mengikuti format di atas.)*

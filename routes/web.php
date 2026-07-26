@@ -60,9 +60,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('inbox.index');
 
     // Tasks Routes (EPIC-003)
-    Route::prefix('tasks')->name('tasks.')->group(function () {
-        // Will be implemented in EPIC-003
-    });
+    Route::get('/tasks', function () {
+        return view('livewire.pages.tasks.index');
+    })->name('tasks.index');
 
     // Projects Routes (EPIC-004)
     Route::prefix('projects')->name('projects.')->group(function () {

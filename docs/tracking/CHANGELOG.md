@@ -14,6 +14,10 @@
 
 ## [Unreleased]
 
+- tasks: add TaskList + TaskForm Livewire components, /tasks route, dashboard widget, nav link, TaskSeeder, and 21 feature tests — EPIC-003 complete (TASK-0013)
+- tasks: add TaskFactory, TaskPolicy, form requests, actions (CreateTask/UpdateTask/UpdateTaskStatus/ArchiveTask), TaskCompleted event, CreateTaskFromInbox contract impl, and 54 unit tests (TASK-0012)
+- tasks: add tasks migration, TaskStatus + TaskPriority enums, and Task model (TASK-0011)
+- tasks: plan EPIC-003 sprint — create TASK-0011, TASK-0012, TASK-0013 tickets (FEAT-0003)
 - inbox: add QuickCapture + InboxList Livewire components, /inbox route, dashboard widget, nav link, InboxItemSeeder, and 24 feature tests — EPIC-002 complete (TASK-0010)
 - inbox: add InboxItemFactory, InboxItemPolicy, form requests, actions (CreateInboxItem/DiscardInboxItem/TriageInboxItem), and 39 unit tests (TASK-0009)
 - inbox: add inbox_items migration, InboxItemStatus enum, and InboxItem model (TASK-0008)

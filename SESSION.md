@@ -23,6 +23,66 @@
 
 ---
 
+## Sesi — 2026-07-26 (Sesi 12)
+
+- **Target:** Menyelesaikan TASK-0013 — Livewire TaskForm + TaskList, route /tasks, dashboard widget, nav link, TaskSeeder, 21 feature tests. Menyelesaikan EPIC-003.
+- **Ticket:** TASK-0013
+- **Progress:** TASK-0013 selesai 100% dan EPIC-003 selesai penuh. TaskForm (create/edit mode, #[Validate], dispatch task-saved, flash Alpine). TaskList (filter active/done/archived, limit widget mode, getTasksProperty orderByRaw, Gate check, #[On task-saved]). Blade: priority badge via badgeClass(), status badge, filter tabs, dropdown aksi state-aware, NULLS LAST sorting. Route /tasks, halaman index. Nav: link Tasks sementara + TODO comment. Dashboard: widget TaskList limit=5 + link Lihat Semua. TaskSeeder 5+3+3+2. 8 TaskFormTest + 13 TaskListTest = 21 feature tests. Total: 189 tests, 275 assertions hijau, pint clean.
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** `NULLS LAST` di PostgreSQL untuk sorting due_date — tidak ditest secara eksplisit karena SQLite tidak support sintaks ini.
+- **File yang Berubah:** `app/Livewire/Tasks/TaskForm.php` (baru), `app/Livewire/Tasks/TaskList.php` (baru), `resources/views/livewire/tasks/task-form.blade.php` (baru), `resources/views/livewire/tasks/task-list.blade.php` (baru), `resources/views/livewire/pages/tasks/index.blade.php` (baru), `routes/web.php` (tambah /tasks), `resources/views/livewire/layout/navigation.blade.php` (tambah Tasks nav), `resources/views/dashboard.blade.php` (TaskList widget), `database/seeders/TaskSeeder.php` (baru), `database/seeders/DatabaseSeeder.php` (tambah TaskSeeder), `tests/Feature/Tasks/TaskFormTest.php` (baru, 8 tests), `tests/Feature/Tasks/TaskListTest.php` (baru, 13 tests), `tickets/tasks/TASK-0013-*.md` (status→Done), `tickets/epics/EPIC-003-tasks.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→FEAT-0004), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md`
+- **Testing:** `php artisan test --filter=Tasks` → 59 passed; `php artisan test` → 189 passed (275 assertions); `vendor/bin/pint` → 4 style issues fixed (TaskList, TaskSeeder, TaskFormTest, TaskListTest), clean.
+- **Catatan:** EPIC-003 (Tasks) selesai penuh — 3 TASK (TASK-0011, TASK-0012, TASK-0013). Contract `CreatesTaskFromInbox` dari EPIC-002 kini tersambung penuh. Nav link Tasks ditandai TODO untuk dihapus saat EPIC-004 selesai.
+- **Next Session:** Kerjakan FEAT-0004 — Kickoff EPIC-004 (Projects & Goals). Baca FSD Modul 3, Database Spec A.3+A.4, pecah menjadi TASK. Jangan lupa tambahkan migration FK `tasks.project_id` → `projects.id` (D-009 resolution) sebagai bagian dari EPIC-004.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 11)
+
+- **Target:** Menyelesaikan TASK-0012 — TaskFactory, TaskPolicy, Form Requests, Actions, Event TaskCompleted + Listener, CreateTaskFromInbox contract implementation, 57 unit tests.
+- **Ticket:** TASK-0012
+- **Progress:** TASK-0012 selesai 100%. TaskFactory (11 state methods). TaskPolicy (7 methods, terdaftar di AuthServiceProvider). 3 Form Requests (StoreTask/UpdateTask/UpdateTaskStatus). InvalidTaskTransitionException. 4 Actions: CreateTask (projectsTableExists guard), UpdateTask (strip status/completed_at), UpdateTaskStatus (allowedTransitions guard + dispatch), ArchiveTask (delegate). Event TaskCompleted + Listener UpdateProjectProgress stub + EventServiceProvider + withProviders() di bootstrap/app.php. CreateTaskFromInbox (implements contract, title truncation 255) + bind di AppServiceProvider. 57 unit tests baru (9+6+17+4+17+4). Total: 168 tests, 249 assertions hijau, pint clean.
+- **Kendala:** `withEvents(listen: [...])` tidak valid — parameter `listen` tidak dikenal di versi Laravel ini. `withEvents()` hanya menerima `$discover: iterable|bool`.
+- **Solusi:** Gunakan `withProviders([EventServiceProvider::class])` di `bootstrap/app.php` — EventServiceProvider mendaftarkan `$listen` secara standar Laravel.
+- **Keputusan:** `projectsTableExists()` guard di `CreateTask` — cek keberadaan tabel `projects` via schema builder. Selama EPIC-003 (tabel belum ada) guard di-skip otomatis. Aktif setelah EPIC-004. Tidak perlu keputusan baru di DECISIONS.md karena sudah dicakup D-009.
+- **File yang Berubah:** `database/factories/Domain/Tasks/TaskFactory.php` (baru), `app/Policies/TaskPolicy.php` (baru), `app/Providers/AuthServiceProvider.php` (tambah TaskPolicy), `app/Http/Requests/StoreTaskRequest.php` (baru), `app/Http/Requests/UpdateTaskRequest.php` (baru), `app/Http/Requests/UpdateTaskStatusRequest.php` (baru), `app/Domain/Tasks/Exceptions/InvalidTaskTransitionException.php` (baru), `app/Domain/Tasks/Actions/CreateTask.php` (baru), `app/Domain/Tasks/Actions/UpdateTask.php` (baru), `app/Domain/Tasks/Actions/UpdateTaskStatus.php` (baru), `app/Domain/Tasks/Actions/ArchiveTask.php` (baru), `app/Domain/Tasks/Events/TaskCompleted.php` (baru), `app/Listeners/UpdateProjectProgress.php` (baru), `app/Providers/EventServiceProvider.php` (baru), `bootstrap/app.php` (withProviders), `app/Domain/Tasks/Actions/CreateTaskFromInbox.php` (baru), `app/Providers/AppServiceProvider.php` (bind contract), `tests/Unit/Actions/Tasks/*.php` (5 test files baru), `tests/Unit/Policies/TaskPolicyTest.php` (baru), `tickets/tasks/TASK-0012-*.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→TASK-0013), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md`
+- **Testing:** `php artisan test --filter=Task` → 59 passed (Task + Triage); `php artisan test` → 168 passed (249 assertions); `vendor/bin/pint` → 9 style issues fixed, clean.
+- **Catatan:** Contract `CreatesTaskFromInbox` dari EPIC-002 kini tersambung ke implementasi nyata. `InboxTriageTest` yang menggunakan `app()->instance()` mock tetap berjalan karena override di-apply setelah binding default.
+- **Next Session:** Kerjakan TASK-0013 — Livewire TaskForm + TaskList, halaman /tasks, Dashboard widget, nav link, 17+ feature tests, TaskSeeder.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 10)
+
+- **Target:** Menyelesaikan TASK-0011 — Migration `tasks`, Enum TaskStatus + TaskPriority, Model Task.
+- **Ticket:** TASK-0011
+- **Progress:** TASK-0011 selesai 100%. Enum TaskStatus (4 cases + `allowedTransitions()` + `isActive()`) dan TaskPriority (3 cases + `weight()` + `badgeClass()` + `label()`). Migration `tasks` dengan project_id tanpa FK constraint (D-009), composite index `(user_id,status,due_date)`, FK user_id restrict, check constraints PostgreSQL only. Model Task dengan HasUlids/SoftDeletes, `newFactory()`, fillable, casts (status/priority/date/datetime), relasi user/project (string FQCN + withDefault)/tags (morphToMany), 7 scopes (todo/inProgress/done/archived/active/pending/overdue).
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** D-009 — FK `project_id` di tabel `tasks` dibuat tanpa constraint (hanya `->index()`) karena tabel `projects` belum ada di EPIC-003. Constraint ditambahkan via ALTER TABLE migration di EPIC-004. Dicatat di DECISIONS.md.
+- **File yang Berubah:** `app/Domain/Tasks/Enums/TaskStatus.php` (baru), `app/Domain/Tasks/Enums/TaskPriority.php` (baru), `app/Domain/Tasks/Models/Task.php` (baru), `database/migrations/2026_07_26_134956_create_tasks_table.php` (baru), `docs/decisions/DECISIONS.md` (D-009 ditambahkan), `tickets/tasks/TASK-0011-migration-model-task.md` (status→Done, checklist), `docs/tracking/CURRENT_TASK.md` (→TASK-0012), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** `php artisan migrate:fresh` → 9 migrations sukses; `php artisan db:table tasks` → 12 kolom, 3 index, 1 FK verified; `php artisan test` → 114 passed (183 assertions); `vendor/bin/pint` → 93 files clean.
+- **Catatan:** `TaskStatus::allowedTransitions()` sudah diimplementasikan di Enum — TASK-0012 tinggal memanggil method ini di `UpdateTaskStatus` Action tanpa menulis ulang logika transisi. `TaskPriority::badgeClass()` dan `label()` sudah siap untuk digunakan langsung di Blade view TASK-0013.
+- **Next Session:** Kerjakan TASK-0012 — TaskFactory, TaskPolicy, StoreTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest, Actions (CreateTask, UpdateTask, UpdateTaskStatus, ArchiveTask), InvalidTaskTransitionException, Event TaskCompleted + Listener UpdateProjectProgress, CreateTaskFromInbox contract implementation, 30+ unit tests.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 9)
+
+- **Target:** FEAT-0003 — Kickoff EPIC-003 (Tasks): baca FSD Modul 2 + Database Spec A.5, pecah EPIC-003 menjadi 3 TASK granular, perbarui dokumentasi tracking.
+- **Ticket:** FEAT-0003
+- **Progress:** FEAT-0003 selesai 100%. Dibuat 4 file tiket: FEAT-0003 (kickoff, Done), TASK-0011 (migration+enum+model Task), TASK-0012 (factory+policy+actions+events+CreatesTaskFromInbox+unit tests), TASK-0013 (Livewire+feature tests+seeder). Dokumentasi tracking diperbarui lengkap.
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** FK `project_id` di tabel `tasks` dibuat tanpa constraint sementara (hanya `->index()`) — constraint FK ke `projects.id` ditambahkan via alter migration di EPIC-004. Ini menghindari dependency tabel `projects` yang belum ada saat TASK-0011 dikerjakan.
+- **File yang Berubah:** `tickets/features/FEAT-0003-kickoff-tasks.md` (baru, Done), `tickets/tasks/TASK-0011-migration-model-task.md` (baru), `tickets/tasks/TASK-0012-factory-policy-actions-events-task.md` (baru), `tickets/tasks/TASK-0013-livewire-task-ui-feature-tests-seeder.md` (baru), `docs/tracking/CURRENT_TASK.md` (→TASK-0011), `docs/tracking/NEXT_TASK.md` (Sprint 4 antrian), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** Tidak ada testing — hanya pembuatan tiket dan dokumentasi.
+- **Catatan:** EPIC-003 dipecah mengikuti pola yang sama dengan EPIC-001 dan EPIC-002: Migration+Enum+Model → Factory+Policy+Actions+Events+Tests → Livewire+FeatureTests+Seeder. TASK-0012 lebih besar dari pola sebelumnya karena mencakup state machine, event/listener, dan implementasi `CreatesTaskFromInbox` contract dari EPIC-002.
+- **Next Session:** Kerjakan TASK-0011 — migration `tasks`, Enum TaskStatus + TaskPriority, Model Task. Baca file tiket dan Database Spec A.5 sebelum mulai.
+
+---
+
 ## Sesi — 2026-07-26 (Sesi 8)
 
 - **Target:** Menyelesaikan TASK-0010 — Livewire QuickCapture + InboxList components, route /inbox, dashboard widget, nav link Inbox, InboxItemSeeder, feature tests.

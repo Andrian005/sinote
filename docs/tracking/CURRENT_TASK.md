@@ -4,30 +4,23 @@
 
 ## Tiket Aktif Saat Ini
 
-**ID:** FEAT-0003
-**Judul:** Kickoff EPIC-003 — Pemecahan Tasks menjadi TASK Granular
+**ID:** FEAT-0004
+**Judul:** Kickoff EPIC-004 — Projects & Goals
 **File Lengkap:** *(belum dibuat — buat di awal sesi berikutnya)*
-**EPIC Induk:** EPIC-003 — Tasks
+**EPIC Induk:** EPIC-004 — Projects & Goals
 **Status:** `To Do`
 
-> EPIC-002 (Inbox) selesai penuh. Sprint 4 dimulai dengan kickoff EPIC-003: baca FSD Modul 2, pecah epic menjadi TASK granular, perbarui antrian. Sambungkan juga `CreatesTaskFromInbox` contract dari EPIC-002 ke implementasi nyata di sini.
+> EPIC-003 (Tasks) selesai penuh. Sprint 5 dimulai dengan kickoff EPIC-004: baca FSD Modul 3 (Goals + Projects), Database Spec A.3 + A.4, pecah EPIC-004 menjadi TASK granular. Tambahkan juga FK constraint `project_id` pada tabel `tasks` (D-009) sebagai bagian dari EPIC-004.
 
-## Ringkasan Cepat
+## Langkah Kickoff
 
-Langkah-langkah FEAT-0003:
-1. Buat file tiket `tickets/features/FEAT-0003-kickoff-tasks.md`
-2. Baca FSD Modul 2 (Tasks) dan Database Spec Bagian B
-3. Pecah EPIC-003 menjadi minimal 3 TASK: migration+enum+model, factory+policy+actions+tests, Livewire+feature tests+seeder
-4. Perbarui `NEXT_TASK.md` dengan antrian Sprint 4
-5. Tandai FEAT-0003 Done, set TASK pertama sebagai CURRENT_TASK
-
-## Sebelum Mulai — Sudah Dibaca?
-
-- [ ] File EPIC-003 untuk scope dan Acceptance Criteria
-- [ ] FSD Modul 2 untuk business rules Tasks
-- [ ] Database Spec Bagian B untuk skema tabel tasks
-- [ ] `DEVELOPMENT_PLAYBOOK.md` § 5 — Coding Order
+1. Buat tiket `tickets/features/FEAT-0004-kickoff-projects-goals.md`
+2. Baca FSD Modul 3.1 (Goal Management) dan 3.2 (Project Management)
+3. Baca Database Spec A.3 (goals) dan A.4 (projects)
+4. Pecah EPIC-004 menjadi minimal 3 TASK: migration+enum+model, factory+policy+actions+tests, Livewire+feature tests+seeder
+5. **Tambahkan migration untuk FK `tasks.project_id` → `projects.id`** (D-009 resolution)
+6. Perbarui NEXT_TASK.md dengan antrian Sprint 5
 
 ---
 
-*Setelah kickoff selesai: TASK pertama dari Sprint 4 menjadi `CURRENT_TASK.md` yang baru.*
+*Setelah kickoff selesai: TASK pertama Sprint 5 menjadi CURRENT_TASK yang baru.*
