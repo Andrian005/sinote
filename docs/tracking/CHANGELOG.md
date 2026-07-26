@@ -14,6 +14,10 @@
 
 ## [Unreleased]
 
+- inbox: add QuickCapture + InboxList Livewire components, /inbox route, dashboard widget, nav link, InboxItemSeeder, and 24 feature tests — EPIC-002 complete (TASK-0010)
+- inbox: add InboxItemFactory, InboxItemPolicy, form requests, actions (CreateInboxItem/DiscardInboxItem/TriageInboxItem), and 39 unit tests (TASK-0009)
+- inbox: add inbox_items migration, InboxItemStatus enum, and InboxItem model (TASK-0008)
+- inbox: plan EPIC-002 sprint — create TASK-0008, TASK-0009, TASK-0010 tickets (FEAT-0002)
 - tagging: add TagInput Livewire component with autocomplete, feature tests, and TagSeeder (TASK-0007)
 - tagging: complete EPIC-001 — Tag layer ready for Task/Project/Note/Habit modules (EPIC-001)
 - tagging: add TagFactory, TagPolicy, StoreTagRequest, and tag actions with unit tests (TASK-0006)

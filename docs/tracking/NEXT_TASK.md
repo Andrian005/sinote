@@ -2,15 +2,18 @@
 
 > Antrian tiket berikutnya setelah `CURRENT_TASK.md` selesai, sudah diurutkan sesuai Coding Order & Dependency Map. **Jangan mengambil tiket dari sini di luar urutan** kecuali ada alasan eksplisit tercatat di `docs/decisions/DECISIONS.md`.
 
-## Antrian (Sprint 3 — Inbox / EPIC-002)
+## Antrian (Sprint 4 — Tasks / EPIC-003)
 
-**Status:** Sprint 2 selesai (EPIC-001 Done). Sprint 3 dimulai dengan kickoff FEAT-0002.
+**Status:** Sprint 3 (EPIC-002 Inbox) selesai penuh. Sprint 4 dimulai dengan tiket kickoff untuk memecah EPIC-003 menjadi TASK granular.
 
-Setelah FEAT-0002 selesai, tiket TASK turunannya akan muncul di sini mengikuti Coding Order:
-- Migration `inbox_items` → Model InboxItem → Factory → Policy → Form Request → Action (Quick Capture, Triase) → Livewire Component → Feature Test → Seeder
+**Urutan Eksekusi (sesuai Coding Order & Dependency Map):**
 
-*(Antrian ini akan diperbarui setelah FEAT-0002 memecah EPIC-002 menjadi TASK-XXXX)*
+1. **FEAT-0003** *(belum dibuat)* — Kickoff EPIC-003 (Tasks)
+   - Baca FSD Modul 2 (Tasks), Database Spec Bagian B (tasks), dan EPIC-003
+   - Pecah EPIC-003 menjadi TASK: migration+model, factory+policy+actions+tests, Livewire+feature tests+seeder
+   - Sambungkan `CreatesTaskFromInbox` contract ke implementasi nyata di sini
+   - Perbarui NEXT_TASK.md dengan antrian Sprint 4
 
-## Setelah Sprint 3 Selesai
+## Setelah Sprint 4 Selesai
 
-Lihat `docs/planning/ROADMAP.md` § Sprint Map untuk Sprint 4–5 (Tasks / EPIC-003). Pecah EPIC-003 menjadi TASK baru mengikuti pola FEAT-0001/FEAT-0002 sebagai tiket kickoff berikutnya.
+Lanjut ke Sprint 5: EPIC-004 (Projects & Goals) atau EPIC-005 (Knowledge Base/Notes) — lihat `docs/planning/ROADMAP.md` § Sprint Map untuk urutan prioritas.

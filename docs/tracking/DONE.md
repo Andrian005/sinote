@@ -15,6 +15,37 @@
 
 ---
 
+### EPIC-002 — Inbox / Capture (Quick Capture & Triage)
+- Selesai: 2026-07-26
+- File: `tickets/epics/EPIC-002-inbox.md`
+- Catatan singkat: EPIC lengkap — 3 TASK (TASK-0008, TASK-0009, TASK-0010) dengan 63 unit + feature tests baru; QuickCapture + InboxList Livewire components, route /inbox, dashboard widget, nav link Inbox, InboxItemSeeder; 114 tests total (183 assertions) hijau, pint clean.
+
+### TASK-0010 — Livewire QuickCapture + InboxList + Feature Tests + Seeder
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0010-livewire-inbox-capture-triage.md`
+- Catatan singkat: QuickCapture component (validate, try/catch, flash), InboxList (pagination, Gate check, mock contracts via container), halaman /inbox, QuickCapture embed di dashboard, nav link Today+Inbox, InboxItemSeeder (7 unprocessed + 3 processed); 24 feature tests (9 QuickCapture + 15 InboxTriage) → 114 total tests hijau.
+
+---
+
+### TASK-0009 — InboxItemFactory, InboxItemPolicy, Form Requests, Actions + Unit Tests
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0009-factory-policy-action-inbox-item.md`
+- Catatan singkat: InboxItemFactory (5 state methods), InboxItemPolicy (6 methods termasuk triage), StoreInboxItemRequest + TriageInboxItemRequest, 3 Actions (CreateInboxItem, DiscardInboxItem, TriageInboxItem via contracts), exception InboxItemAlreadyProcessedException, 2 contracts sebagai stub untuk EPIC-003/005; 39 unit tests baru → total 91 tests (146 assertions) hijau, pint clean.
+
+---
+
+### TASK-0008 — Migration `inbox_items`, Enum InboxItemStatus, Model InboxItem
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0008-migration-model-inbox-item.md`
+- Catatan singkat: Migration inbox_items (posisi 3, setelah users, sebelum tags) dengan ULID, user_id FK, status enum, soft delete; Enum InboxItemStatus (Unprocessed/Processed/Discarded); Model InboxItem dengan cast, scopes, relasi belongsTo User; verifikasi via migrate:fresh dan tinker, 52 tests tetap hijau.
+
+---
+
+### FEAT-0002 — Kickoff EPIC-002 (Inbox/Capture) — Pemecahan Menjadi TASK
+- Selesai: 2026-07-26
+- File: `tickets/features/FEAT-0002-kickoff-inbox.md`
+- Catatan singkat: EPIC-002 dipecah menjadi TASK-0008 (migration + enum + model), TASK-0009 (factory + policy + actions + unit test), TASK-0010 (Livewire Quick Capture + Inbox Triage + feature test + seeder); NEXT_TASK.md diperbarui dengan Sprint 3; TASK-0008 menjadi tiket aktif.
+
 ### TASK-0005 — Migration `tags` + `taggables` & Model Tag
 - Selesai: 2026-07-26
 - File: `tickets/tasks/TASK-0005-migration-model-tag.md`

@@ -37,25 +37,39 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-900">Lupa Password?</h2>
+        <p class="mt-2 text-sm text-gray-600">
+            Tidak masalah. Masukkan email Anda dan kami akan mengirimkan link untuk reset password.
+        </p>
     </div>
 
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
+    <form wire:submit="sendPasswordResetLink" class="space-y-5">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus />
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input 
+                wire:model="email" 
+                id="email" 
+                type="email" 
+                name="email" 
+                required 
+                autofocus
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                placeholder="nama@email.com"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg shadow-blue-500/30">
+            Kirim Link Reset Password
+        </button>
+
+        <div class="text-center">
+            <a href="{{ route('login') }}" wire:navigate class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                Kembali ke halaman login
+            </a>
         </div>
     </form>
 </div>

@@ -24,16 +24,6 @@ class AppServiceProvider extends ServiceProvider
             return $action->execute($request->email, $request->password, false);
         });
 
-        Fortify::loginView(fn () => view('layouts.guest', ['slot' => view('livewire.pages.auth.login')]));
-
-        Fortify::registerView(fn () => view('layouts.guest', ['slot' => view('livewire.pages.auth.register')]));
-
-        Fortify::requestPasswordResetLinkView(fn () => view('layouts.guest', ['slot' => view('livewire.pages.auth.forgot-password')]));
-
-        Fortify::resetPasswordView(fn ($request) => view('layouts.guest', ['slot' => view('livewire.pages.auth.reset-password', ['request' => $request])]));
-
-        Fortify::verifyEmailView(fn () => view('layouts.guest', ['slot' => view('livewire.pages.auth.verify-email')]));
-
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email.$request->ip());
         });

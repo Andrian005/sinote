@@ -23,6 +23,66 @@
 
 ---
 
+## Sesi — 2026-07-26 (Sesi 8)
+
+- **Target:** Menyelesaikan TASK-0010 — Livewire QuickCapture + InboxList components, route /inbox, dashboard widget, nav link Inbox, InboxItemSeeder, feature tests.
+- **Ticket:** TASK-0010
+- **Progress:** TASK-0010 selesai 100% dan EPIC-002 selesai penuh. QuickCapture component (validate, try/catch preserve content, flash Alpine 3 detik, character counter, aria). InboxList component (WithPagination, computed unprocessed scope, Gate check triage/discard, flash/flashIsError, app() untuk DI contracts). Halaman /inbox dengan dua card. Dashboard embed QuickCapture + link "Buka Inbox →". Navigation "Today" + "Inbox" (desktop + responsive). InboxItemSeeder (7 unprocessed + 3 processed). DatabaseSeeder diperbarui. 24 feature tests (9 QuickCapture + 15 InboxTriage). Total: 114 tests, 183 assertions hijau, pint clean.
+- **Kendala:** DatabaseSeeder kehilangan `class DatabaseSeeder extends Seeder` akibat str_replace yang menghapus baris tersebut saat menambahkan `use` statement. Pint mendeteksi parse error.
+- **Solusi:** Tulis ulang DatabaseSeeder lengkap dengan `fs_write`. `use` statements untuk seeder tidak diperlukan karena satu namespace dengan `Database\Seeders`.
+- **Keputusan:** `InboxList::triage()` menggunakan `app(TriageInboxItem::class)` — bukan `new TriageInboxItem(...)` — agar contracts bisa di-mock lewat Laravel container di feature tests tanpa binding nyata. `bindTriageMocks()` helper di InboxTriageTest.php mendaftarkan mock ke container via `app()->instance()`.
+- **File yang Berubah:** `app/Livewire/Inbox/QuickCapture.php` (baru), `app/Livewire/Inbox/InboxList.php` (baru), `resources/views/livewire/inbox/quick-capture.blade.php` (baru), `resources/views/livewire/inbox/inbox-list.blade.php` (baru), `resources/views/livewire/pages/inbox/index.blade.php` (baru), `resources/views/dashboard.blade.php` (diperbarui), `resources/views/livewire/layout/navigation.blade.php` (diperbarui), `routes/web.php` (diperbarui), `database/seeders/InboxItemSeeder.php` (baru), `database/seeders/DatabaseSeeder.php` (diperbaiki), `tests/Feature/Inbox/QuickCaptureTest.php` (baru, 9 tests), `tests/Feature/Inbox/InboxTriageTest.php` (baru, 15 tests), `tickets/tasks/TASK-0010-livewire-inbox-capture-triage.md` (status→Done, checklist), `tickets/epics/EPIC-002-inbox.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→FEAT-0003), `docs/tracking/NEXT_TASK.md` (Sprint 4), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** `php artisan test` → 114 passed (183 assertions); `vendor/bin/pint` → 3 style issues fixed (InboxList.php + InboxTriageTest.php), kemudian clean; seeder diverifikasi via DatabaseSeeder.
+- **Catatan:** Semua Acceptance Criteria TASK-0010 terpenuhi — 24 feature tests melampaui target 15+. EPIC-002 (Inbox) selesai penuh: 3 TASK (TASK-0008, TASK-0009, TASK-0010). Contracts `CreatesTaskFromInbox` + `CreatesNoteFromInbox` siap disambungkan ke implementasi nyata di EPIC-003 (Tasks) dan EPIC-005 (Notes).
+- **Next Session:** Kerjakan FEAT-0003 — Kickoff EPIC-003 (Tasks). Baca FSD Modul 2, Database Spec Bagian B, EPIC-003, lalu pecah menjadi TASK granular. Sambungkan `CreatesTaskFromInbox` contract ke implementasi nyata.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 7)
+
+- **Target:** Menyelesaikan TASK-0009 — InboxItemFactory, InboxItemPolicy, StoreCaptureRequest, Actions (CaptureInboxItem, TriageInboxItem stub, DiscardInboxItem) + unit test seluruh Actions.
+- **Ticket:** TASK-0009
+- **Progress:** TASK-0009 selesai 100%. InboxItemFactory (5 state methods, newFactory() di Model). InboxItemPolicy (6 methods: viewAny/view/create/update/delete/triage, terdaftar di AuthServiceProvider). StoreInboxItemRequest (trim via prepareForValidation, min:1 max:5000) + TriageInboxItemRequest (target_type in[task,note], project_id conditional). 3 Actions: CreateInboxItem, DiscardInboxItem, TriageInboxItem via contracts. InboxItemAlreadyProcessedException. 2 contracts (CreatesTaskFromInbox, CreatesNoteFromInbox) sebagai stub untuk EPIC-003/005. 39 unit tests baru (6+6+13 Actions + 14 Policy). Total: 91 tests, 146 assertions hijau, pint clean.
+- **Kendala:** (1) `faker->paragraph(nb_sentences: 2)` — Faker memanggil via `call_user_func_array` yang tidak support named parameters. (2) `fakeModel()` anonymous class extends Model konflik dengan Laravel `HasEvents` boot yang memanggil constructor tanpa argumen.
+- **Solusi:** (1) Ganti ke positional argument `paragraph(2)`. (2) Ganti anonymous class dengan `Mockery::mock(Model::class)` yang hanya stub `getKey()`.
+- **Keputusan:** TriageInboxItem valid types dibatasi `task` dan `note` — `project` tidak didukung karena FSD Modul 1 hanya mendefinisikan konversi ke Task dan Note (project conversion bukan use case Inbox di FSD). Tidak perlu ADR baru — ini klarifikasi scope, bukan penyimpangan arsitektur.
+- **File yang Berubah:** `database/factories/Domain/Inbox/InboxItemFactory.php` (baru), `app/Domain/Inbox/Models/InboxItem.php` (tambah newFactory), `app/Policies/InboxItemPolicy.php` (baru), `app/Providers/AuthServiceProvider.php` (tambah InboxItemPolicy), `app/Http/Requests/StoreInboxItemRequest.php` (baru), `app/Http/Requests/TriageInboxItemRequest.php` (baru), `app/Domain/Inbox/Exceptions/InboxItemAlreadyProcessedException.php` (baru), `app/Domain/Inbox/Actions/CreateInboxItem.php` (baru), `app/Domain/Inbox/Actions/DiscardInboxItem.php` (baru), `app/Domain/Inbox/Actions/TriageInboxItem.php` (baru), `app/Domain/Inbox/Contracts/CreatesTaskFromInbox.php` (baru), `app/Domain/Inbox/Contracts/CreatesNoteFromInbox.php` (baru), `tests/Unit/Actions/Inbox/CreateInboxItemTest.php` (baru), `tests/Unit/Actions/Inbox/DiscardInboxItemTest.php` (baru), `tests/Unit/Actions/Inbox/TriageInboxItemTest.php` (baru), `tests/Unit/Policies/InboxItemPolicyTest.php` (baru), `tickets/tasks/TASK-0009-factory-policy-action-inbox-item.md` (status→Done, checklist), `docs/tracking/CURRENT_TASK.md` (→TASK-0010), `docs/tracking/NEXT_TASK.md` (diperbarui), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** `php artisan test` → 91 passed (146 assertions); `vendor/bin/pint` → 3 style issues fixed (ordered_imports, no_whitespace, no_unused_imports), kemudian clean; `php artisan test` setelah pint → tetap 91 passed.
+- **Catatan:** Semua Acceptance Criteria TASK-0009 terpenuhi — 39 unit tests baru melampaui target 15-20. Contracts di `app/Domain/Inbox/Contracts/` siap disambungkan saat EPIC-003 (Tasks) dan EPIC-005 (Notes) dibangun.
+- **Next Session:** Kerjakan TASK-0010 — Livewire QuickCapture + InboxList components, route `/inbox`, InboxItemSeeder, feature tests end-to-end (~15 tests). Baca file tiket TASK-0010 dan FSD Modul 1 sebelum mulai.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 6)
+
+- **Target:** Membaca dokumentasi proyek lengkap sesuai AI_INSTRUCTIONS.md, mengisi SESSION.md, mengkonfirmasi tiket aktif (TASK-0008), dan menyelesaikan TASK-0008 (Migration, Enum, Model InboxItem).
+- **Ticket:** TASK-0008
+- **Progress:** TASK-0008 selesai 100%. Migration `inbox_items` dibuat dengan ULID PK, user_id FK (restrict), content text, status dengan default, converted_to_type/id, processed_at, soft delete, timestamps, composite index (user_id, status), dan check constraint (PostgreSQL only — conditional). Enum InboxItemStatus dibuat dengan 3 backed cases. Model InboxItem dibuat dengan HasUlids, SoftDeletes, cast status/timestamps, fillable explicit, relasi belongsTo User, scope unprocessed/processed/discarded. Verifikasi via migrate:fresh, db:table, dan tinker — semua berfungsi sempurna. Semua test existing (52 tests) tetap hijau. Pint clean.
+- **Kendala:** (1) Check constraint awalnya menggunakan `$table->check()` yang tidak tersedia di Laravel Schema builder. (2) SQLite (digunakan untuk testing) tidak support ALTER TABLE ADD CONSTRAINT CHECK.
+- **Solusi:** (1) Gunakan raw SQL `DB::statement()` untuk add check constraint. (2) Tambahkan conditional `if (DB::getDriverName() === 'pgsql')` agar constraint hanya diterapkan di PostgreSQL, tidak di SQLite testing.
+- **Keputusan:** Check constraint `inbox_items_status_check` hanya diterapkan di PostgreSQL production, tidak di SQLite testing — ini acceptable karena cast Enum di Model sudah enforce validasi di application layer.
+- **File yang Berubah:** `database/migrations/0001_01_01_000003_create_inbox_items_table.php` (baru), `app/Domain/Inbox/Enums/InboxItemStatus.php` (baru), `app/Domain/Inbox/Models/InboxItem.php` (baru), `tickets/tasks/TASK-0008-migration-model-inbox-item.md` (status→Done, checklist), `docs/tracking/CURRENT_TASK.md` (→TASK-0009), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** `php artisan test` — 52 passed (90 assertions); `vendor/bin/pint` — clean; `php artisan migrate:fresh` sukses; skema diverifikasi via `php artisan db:table inbox_items`; tinker verification script (7 tests) passed.
+- **Catatan:** Semua Acceptance Criteria TASK-0008 terpenuhi. Migration order: posisi 3 (setelah users, sebelum password_reset_tokens dan personal_access_tokens, sebelum tags). Field `converted_to_type`/`converted_to_id` adalah informational only (bukan FK) sesuai Database Spec Bagian E poin 2.
+- **Next Session:** Kerjakan TASK-0009 — InboxItemFactory, InboxItemPolicy, StoreCaptureRequest, Actions (CaptureInboxItem, TriageInboxItem stub, DiscardInboxItem) + unit test.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 5)
+
+- **Target:** Membaca dokumentasi proyek sesuai AI_INSTRUCTIONS.md, mengisi SESSION.md untuk sesi ini, mengkonfirmasi tiket aktif, dan menyelesaikan FEAT-0002 (kickoff EPIC-002).
+- **Ticket:** FEAT-0002
+- **Progress:** FEAT-0002 selesai 100%. Dokumen proyek dibaca sesuai urutan (PROJECT_CONTEXT.md, CORE_RULES.md, DEVELOPMENT_PLAYBOOK.md, CURRENT_TASK.md, DECISIONS.md). File tiket FEAT-0002 dibuat. EPIC-002 dipecah menjadi 3 TASK granular: TASK-0008 (Migration + Enum + Model InboxItem), TASK-0009 (Factory + Policy + Actions + Unit Tests), TASK-0010 (Livewire Components + Feature Tests + Seeder). Dokumentasi tracking diperbarui lengkap.
+- **Kendala:** Tidak ada.
+- **Solusi:** -
+- **Keputusan:** InboxItem menggunakan field informatif `converted_to_type`/`converted_to_id` yang bukan foreign key sungguhan (sesuai Database Spec Bagian E, poin 2). TriageInboxItem akan menggunakan interface/contract untuk CreateTask/CreateNote yang belum ada — implementasi nyata akan disambungkan di EPIC-003 dan EPIC-005.
+- **File yang Berubah:** `tickets/features/FEAT-0002-kickoff-inbox.md` (baru, Done), `tickets/tasks/TASK-0008-migration-model-inbox-item.md` (baru), `tickets/tasks/TASK-0009-factory-policy-action-inbox-item.md` (baru), `tickets/tasks/TASK-0010-livewire-inbox-capture-triage.md` (baru), `docs/tracking/CURRENT_TASK.md` (→TASK-0008), `docs/tracking/NEXT_TASK.md` (antrian Sprint 3), `docs/tracking/DONE.md` (FEAT-0002 added), `docs/tracking/CHANGELOG.md` (FEAT-0002 added), `SESSION.md` (sesi ini)
+- **Testing:** Tidak ada testing — hanya pembuatan tiket dan dokumentasi.
+- **Catatan:** EPIC-002 dipecah mengikuti Coding Order yang sama dengan EPIC-001: Migration+Enum+Model → Factory+Policy+Actions+Tests → Livewire+FeatureTests+Seeder. Total estimasi Sprint 3: ~2.5 hari kerja efektif. Migration order untuk `inbox_items`: setelah `users`, sebelum `tags` (tidak ada dependency antar keduanya, dipilih urutan ini untuk konsistensi).
+- **Next Session:** Kerjakan TASK-0008 — membuat migration `inbox_items`, Enum InboxItemStatus, Model InboxItem, verifikasi skema via migrate:fresh dan tinker.
+
+---
+
 ## Sesi — 2026-07-26 (Sesi 4)
 
 - **Target:** Transisi dari EPIC-001 (selesai) ke EPIC-002 — memperbarui dokumentasi tracking dan menetapkan FEAT-0002 sebagai tiket aktif berikutnya.

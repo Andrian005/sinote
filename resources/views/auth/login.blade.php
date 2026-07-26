@@ -1,24 +1,3 @@
-@php
-use App\Livewire\Forms\LoginForm;
-use Illuminate\Support\Facades\Session;
-use Livewire\Volt\Component;
-
-new class extends Component
-{
-    public LoginForm $form;
-
-    public function login(): void
-    {
-        $this->validate();
-        $this->form->authenticate();
-        Session::regenerate();
-        
-        // Redirect to dashboard
-        $this->redirect(route('dashboard'), navigate: true);
-    }
-}
-@endphp
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -29,7 +8,6 @@ new class extends Component
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles
         <style>
             body {
                 font-family: 'Inter', sans-serif;
@@ -56,26 +34,30 @@ new class extends Component
 
                         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                        <form wire:submit="login" class="space-y-5">
+                        <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                            @csrf
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                                 <input 
-                                    wire:model.defer="form.email" 
+                                    name="email" 
                                     id="email" 
                                     type="email" 
+                                    value="{{ old('email') }}"
                                     required 
                                     autofocus 
                                     autocomplete="username"
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
                                     placeholder="nama@email.com"
                                 />
-                                <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
+                                @error('email')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div>
                                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                                 <input 
-                                    wire:model.defer="form.password" 
+                                    name="password" 
                                     id="password" 
                                     type="password" 
                                     required 
@@ -83,13 +65,15 @@ new class extends Component
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
                                     placeholder="••••••••"
                                 />
-                                <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
+                                @error('password')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="flex items-center justify-between">
                                 <label for="remember" class="flex items-center cursor-pointer">
                                     <input 
-                                        wire:model.defer="form.remember" 
+                                        name="remember" 
                                         id="remember" 
                                         type="checkbox"
                                         class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0"
@@ -119,6 +103,5 @@ new class extends Component
                 </div>
             </div>
         </div>
-        @livewireScripts
     </body>
 </html>

@@ -6,7 +6,8 @@
 - **Dependency:** EPIC-000, EPIC-001.
 - **Priority:** Must Have — MVP 0 (v0.1).
 - **Estimasi:** 2–3 hari.
-- **Status:** `Backlog`
+- **Status:** `Done`
+- **Selesai:** 2026-07-26
 
 ## Acceptance Criteria
 

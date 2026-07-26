@@ -4,29 +4,30 @@
 
 ## Tiket Aktif Saat Ini
 
-**ID:** FEAT-0002
-**Judul:** Kickoff EPIC-002 (Inbox/Capture) — Pemecahan Menjadi TASK
-**File Lengkap:** `tickets/features/FEAT-0002-kickoff-inbox.md` *(belum dibuat)*
-**EPIC Induk:** EPIC-002 — Inbox / Capture
+**ID:** FEAT-0003
+**Judul:** Kickoff EPIC-003 — Pemecahan Tasks menjadi TASK Granular
+**File Lengkap:** *(belum dibuat — buat di awal sesi berikutnya)*
+**EPIC Induk:** EPIC-003 — Tasks
 **Status:** `To Do`
 
-> Tiket sebelumnya (EPIC-001 — Tagging & Context) sudah selesai penuh dengan 3 TASK (TASK-0005, TASK-0006, TASK-0007) dan dipindahkan ke DONE.md.
-> Lapisan Tag siap digunakan oleh modul berikutnya.
+> EPIC-002 (Inbox) selesai penuh. Sprint 4 dimulai dengan kickoff EPIC-003: baca FSD Modul 2, pecah epic menjadi TASK granular, perbarui antrian. Sambungkan juga `CreatesTaskFromInbox` contract dari EPIC-002 ke implementasi nyata di sini.
 
-## Ringkasan Cepat (Detail Lengkap di File Tiket)
+## Ringkasan Cepat
 
-Memecah EPIC-002 (Inbox) menjadi tiket TASK granular yang siap dikerjakan. Mengikuti pola FEAT-0001: membaca FSD Modul 1, Database Spec A.3, dan UI/UX Spec untuk Inbox; lalu memecah menjadi TASK dengan urutan: Migration → Model → Factory → Policy → Form Request → Action → Event/Listener → Livewire Component → Feature Test → Seeder.
+Langkah-langkah FEAT-0003:
+1. Buat file tiket `tickets/features/FEAT-0003-kickoff-tasks.md`
+2. Baca FSD Modul 2 (Tasks) dan Database Spec Bagian B
+3. Pecah EPIC-003 menjadi minimal 3 TASK: migration+enum+model, factory+policy+actions+tests, Livewire+feature tests+seeder
+4. Perbarui `NEXT_TASK.md` dengan antrian Sprint 4
+5. Tandai FEAT-0003 Done, set TASK pertama sebagai CURRENT_TASK
 
 ## Sebelum Mulai — Sudah Dibaca?
 
-- [ ] `docs/context/PROJECT_CONTEXT.md`
-- [ ] `docs/rules/CORE_RULES.md`
-- [ ] `docs/decisions/DECISIONS.md`
-- [ ] File EPIC: `tickets/epics/EPIC-002-inbox.md`
-- [ ] `docs/context/reference/02-fsd.md` — Modul 1 (Inbox)
-- [ ] `docs/context/reference/04-database-business-rules-spec.md` — A.3 (Tabel `inbox_items`)
-- [ ] `DEVELOPMENT_PLAYBOOK.md` § 6 — Ticket Workflow
+- [ ] File EPIC-003 untuk scope dan Acceptance Criteria
+- [ ] FSD Modul 2 untuk business rules Tasks
+- [ ] Database Spec Bagian B untuk skema tabel tasks
+- [ ] `DEVELOPMENT_PLAYBOOK.md` § 5 — Coding Order
 
 ---
 
-*Setelah tiket ini selesai: tiket TASK baru dibuat di `tickets/tasks/`, NEXT_TASK.md diperbarui dengan antrian Sprint 3, lalu tiket TASK pertama menjadi `CURRENT_TASK.md` yang baru.*
+*Setelah kickoff selesai: TASK pertama dari Sprint 4 menjadi `CURRENT_TASK.md` yang baru.*

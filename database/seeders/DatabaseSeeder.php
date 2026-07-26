@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Shared\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,14 +11,18 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database.
+     *
+     * Urutan seeder mengikuti dependency:
+     * 1. UserSeeder (fondasi - dibutuhkan semua seeder lain)
+     * 2. TagSeeder (independen, hanya butuh user)
+     * 3. InboxItemSeeder (butuh user)
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            UserSeeder::class,
+            TagSeeder::class,
+            InboxItemSeeder::class,
         ]);
     }
 }

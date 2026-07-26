@@ -70,36 +70,60 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <form wire:submit="resetPassword">
-        <!-- Email Address -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-900">Reset Password</h2>
+        <p class="mt-1 text-sm text-gray-600">Masukkan email dan password baru Anda.</p>
+    </div>
+
+    <form wire:submit="resetPassword" class="space-y-5">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input 
+                wire:model="email" 
+                id="email" 
+                type="email" 
+                name="email" 
+                required 
+                autofocus 
+                autocomplete="username"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                placeholder="nama@email.com"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password Baru</label>
+            <input 
+                wire:model="password" 
+                id="password" 
+                type="password" 
+                name="password" 
+                required 
+                autocomplete="new-password"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                placeholder="••••••••"
+            />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                          type="password"
-                          name="password_confirmation" required autocomplete="new-password" />
-
+        <div>
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Konfirmasi Password Baru</label>
+            <input 
+                wire:model="password_confirmation" 
+                id="password_confirmation" 
+                type="password" 
+                name="password_confirmation" 
+                required 
+                autocomplete="new-password"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all outline-none"
+                placeholder="••••••••"
+            />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg shadow-blue-500/30">
+            Reset Password
+        </button>
     </form>
 </div>
