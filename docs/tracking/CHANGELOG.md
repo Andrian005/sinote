@@ -14,6 +14,10 @@
 
 ## [Unreleased]
 
+- projects: add GoalForm + GoalList + ProjectForm + ProjectList Livewire components, /goals + /projects routes, dashboard widget, nav update, GoalSeeder + ProjectSeeder, 42 feature tests — EPIC-004 complete (TASK-0016)
+- projects: add GoalFactory, ProjectFactory, GoalPolicy, ProjectPolicy, form requests, actions, RecalculateProjectProgress, update listener, 69 unit tests (TASK-0015)
+- projects: add goals + projects migrations, GoalType/GoalStatus/ProjectStatus enums, Goal + Project models, resolve D-009 FK tasks.project_id (TASK-0014)
+- projects: plan EPIC-004 sprint — create TASK-0014, TASK-0015, TASK-0016 tickets (FEAT-0004)
 - tasks: add TaskList + TaskForm Livewire components, /tasks route, dashboard widget, nav link, TaskSeeder, and 21 feature tests — EPIC-003 complete (TASK-0013)
 - tasks: add TaskFactory, TaskPolicy, form requests, actions (CreateTask/UpdateTask/UpdateTaskStatus/ArchiveTask), TaskCompleted event, CreateTaskFromInbox contract impl, and 54 unit tests (TASK-0012)
 - tasks: add tasks migration, TaskStatus + TaskPriority enums, and Task model (TASK-0011)

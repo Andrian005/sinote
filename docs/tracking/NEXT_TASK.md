@@ -2,27 +2,27 @@
 
 > Antrian tiket berikutnya setelah `CURRENT_TASK.md` selesai, sudah diurutkan sesuai Coding Order & Dependency Map. **Jangan mengambil tiket dari sini di luar urutan** kecuali ada alasan eksplisit tercatat di `docs/decisions/DECISIONS.md`.
 
-## Antrian (Sprint 4 — Tasks / EPIC-003)
+## Antrian (Sprint 5 — Projects & Goals / EPIC-004)
 
-**Status:** Sprint 3 (EPIC-002 Inbox) selesai penuh. FEAT-0003 kickoff selesai — 3 TASK siap dikerjakan.
+**Status:** Sprint 4 (EPIC-003 Tasks) selesai penuh. FEAT-0004 kickoff selesai — 3 TASK siap dikerjakan.
 
 **Urutan Eksekusi (sesuai Coding Order & Dependency Map):**
 
-1. **TASK-0011** — Migration `tasks`, Enum TaskStatus + TaskPriority, Model Task
-   - Dependency: FEAT-0003 (Done)
-   - Estimasi: 0.5 hari
-   - Scope: Migration (FK project_id tanpa constraint sementara), 2 Enum, Model Task dengan cast/scopes/relasi
+1. **TASK-0014** — Migrations (goals, projects, FK tasks.project_id), Enum GoalType + GoalStatus + ProjectStatus, Model Goal + Project
+   - Dependency: FEAT-0004 (Done)
+   - Estimasi: 0.75 hari
+   - Scope: 2 migration baru + 1 migration alter (D-009 resolve), 3 Enum, 2 Model dengan cast/scopes/relasi; namespace `App\Domain\Projects\`
 
-2. **TASK-0012** — TaskFactory, TaskPolicy, Form Requests, Actions, Event + Unit Tests
-   - Dependency: TASK-0011
+2. **TASK-0015** — GoalFactory + ProjectFactory, Policies, Form Requests, Actions, RecalculateProjectProgress, Unit Tests
+   - Dependency: TASK-0014
    - Estimasi: 1.5 hari
-   - Scope: Factory (9 states), Policy (7 methods), 3 Form Requests, 4 Actions + state machine guard, Event TaskCompleted + Listener stub, implementasi `CreatesTaskFromInbox` contract
+   - Scope: 2 factories, 2 policies, 6 form requests, 8 actions + 2 exceptions, update `UpdateProjectProgress` listener stub → implementasi nyata, 70+ unit tests
 
-3. **TASK-0013** — Livewire TaskList + TaskForm + Feature Tests + TaskSeeder
-   - Dependency: TASK-0012
-   - Estimasi: 1.5 hari
-   - Scope: 2 Livewire components, halaman /tasks, Dashboard widget, 17+ feature tests, seeder
+3. **TASK-0016** — Livewire GoalForm + GoalList + ProjectForm + ProjectList, Feature Tests, Seeders
+   - Dependency: TASK-0015
+   - Estimasi: 2 hari
+   - Scope: 4 Livewire components, halaman /goals + /projects, nav "Projects & Goals" primer (hapus link Tasks sementara), Dashboard widget ProjectList, 34+ feature tests, GoalSeeder + ProjectSeeder
 
-## Setelah Sprint 4 Selesai
+## Setelah Sprint 5 Selesai
 
-Lanjut ke Sprint 5: EPIC-004 (Projects & Goals) sebagai kickoff FEAT-0004 — lihat `docs/planning/ROADMAP.md` untuk urutan prioritas.
+Lanjut ke Sprint 6: EPIC-005 (Knowledge Base / Notes) sebagai kickoff FEAT-0005.

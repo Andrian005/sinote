@@ -2,6 +2,7 @@
 
 namespace App\Domain\Tasks\Models;
 
+use App\Domain\Projects\Models\Project;
 use App\Domain\Shared\Models\Tag;
 use App\Domain\Shared\Models\User;
 use App\Domain\Tasks\Enums\TaskPriority;
@@ -63,15 +64,11 @@ class Task extends Model
     /**
      * Optional Project association.
      * withDefault(null) ensures the relation returns null (not an empty Model)
-     * when project_id is null — consistent with nullable FK design.
-     * FK constraint will be added in EPIC-004.
+     * when project_id is null.
      */
     public function project(): BelongsTo
     {
-        // Project model does not exist yet (EPIC-004).
-        // Using string FQCN to avoid class-not-found at boot time.
-        return $this->belongsTo('App\Domain\Projects\Models\Project')
-            ->withDefault(null);
+        return $this->belongsTo(Project::class)->withDefault(null);
     }
 
     /**

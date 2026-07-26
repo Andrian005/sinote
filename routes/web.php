@@ -65,14 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('tasks.index');
 
     // Projects Routes (EPIC-004)
-    Route::prefix('projects')->name('projects.')->group(function () {
-        // Will be implemented in EPIC-004
-    });
+    Route::get('/projects', function () {
+        return view('livewire.pages.projects.index');
+    })->name('projects.index');
 
     // Goals Routes (EPIC-004)
-    Route::prefix('goals')->name('goals.')->group(function () {
-        // Will be implemented in EPIC-004
-    });
+    Route::get('/goals', function () {
+        return view('livewire.pages.goals.index');
+    })->name('goals.index');
 
     // Notes Routes (EPIC-005)
     Route::prefix('notes')->name('notes.')->group(function () {

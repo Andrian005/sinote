@@ -4,23 +4,23 @@
 
 ## Tiket Aktif Saat Ini
 
-**ID:** FEAT-0004
-**Judul:** Kickoff EPIC-004 — Projects & Goals
+**ID:** FEAT-0005
+**Judul:** Kickoff EPIC-005 — Knowledge Base / Notes
 **File Lengkap:** *(belum dibuat — buat di awal sesi berikutnya)*
-**EPIC Induk:** EPIC-004 — Projects & Goals
+**EPIC Induk:** EPIC-005 — Knowledge Base / Notes
 **Status:** `To Do`
 
-> EPIC-003 (Tasks) selesai penuh. Sprint 5 dimulai dengan kickoff EPIC-004: baca FSD Modul 3 (Goals + Projects), Database Spec A.3 + A.4, pecah EPIC-004 menjadi TASK granular. Tambahkan juga FK constraint `project_id` pada tabel `tasks` (D-009) sebagai bagian dari EPIC-004.
+> EPIC-004 (Projects & Goals) selesai penuh. Sprint 6 dimulai dengan kickoff EPIC-005: baca FSD Modul 4 (Knowledge Base/Notes), Database Spec A.6, pecah EPIC-005 menjadi TASK granular. Sambungkan juga `CreatesNoteFromInbox` contract dari EPIC-002.
 
 ## Langkah Kickoff
 
-1. Buat tiket `tickets/features/FEAT-0004-kickoff-projects-goals.md`
-2. Baca FSD Modul 3.1 (Goal Management) dan 3.2 (Project Management)
-3. Baca Database Spec A.3 (goals) dan A.4 (projects)
-4. Pecah EPIC-004 menjadi minimal 3 TASK: migration+enum+model, factory+policy+actions+tests, Livewire+feature tests+seeder
-5. **Tambahkan migration untuk FK `tasks.project_id` → `projects.id`** (D-009 resolution)
-6. Perbarui NEXT_TASK.md dengan antrian Sprint 5
+1. Buat tiket `tickets/features/FEAT-0005-kickoff-notes.md`
+2. Baca FSD Modul 4 (Notes/Knowledge Base)
+3. Baca Database Spec A.6 (notes)
+4. Pecah EPIC-005 menjadi TASK: migration+model, factory+policy+actions+tests, Livewire+feature tests+seeder
+5. Sambungkan `CreatesNoteFromInbox` contract ke implementasi nyata
+6. Perbarui NEXT_TASK.md dengan antrian Sprint 6
 
 ---
 
-*Setelah kickoff selesai: TASK pertama Sprint 5 menjadi CURRENT_TASK yang baru.*
+*Setelah kickoff selesai: TASK pertama Sprint 6 menjadi CURRENT_TASK yang baru.*

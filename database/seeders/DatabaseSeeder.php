@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             InboxItemSeeder::class,
             TaskSeeder::class,
+            GoalSeeder::class,
+            ProjectSeeder::class,
         ]);
     }
 }

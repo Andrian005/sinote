@@ -36,9 +36,8 @@ new class extends Component
                     <x-nav-link :href="route('inbox.index')" :active="request()->routeIs('inbox.*')" wire:navigate>
                         {{ __('Inbox') }}
                     </x-nav-link>
-                    {{-- TODO: hapus link Tasks saat EPIC-004 selesai (Blueprint: Tasks tidak punya nav item sendiri) --}}
-                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')" wire:navigate>
-                        {{ __('Tasks') }}
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.*')" wire:navigate>
+                        {{ __('Projects & Goals') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -94,9 +93,8 @@ new class extends Component
             <x-responsive-nav-link :href="route('inbox.index')" :active="request()->routeIs('inbox.*')" wire:navigate>
                 {{ __('Inbox') }}
             </x-responsive-nav-link>
-            {{-- TODO: hapus saat EPIC-004 selesai --}}
-            <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')" wire:navigate>
-                {{ __('Tasks') }}
+            <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.*')" wire:navigate>
+                {{ __('Projects & Goals') }}
             </x-responsive-nav-link>
         </div>
 

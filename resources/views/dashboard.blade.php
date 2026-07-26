@@ -42,6 +42,19 @@
                 <livewire:tasks.task-list :limit="5" />
             </div>
 
+            {{-- Projects widget — Projects & Goals --}}
+            <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                        Projects
+                    </h3>
+                    <a href="{{ route('projects.index') }}" class="text-xs text-blue-600 hover:text-blue-700 hover:underline" wire:navigate>
+                        Lihat Semua →
+                    </a>
+                </div>
+                <livewire:projects.project-list :limit="3" />
+            </div>
+
             {{-- Placeholder for Habits and other modules --}}
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-500 text-sm">

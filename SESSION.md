@@ -23,6 +23,66 @@
 
 ---
 
+## Sesi — 2026-07-26 (Sesi 16)
+
+- **Target:** Menyelesaikan TASK-0016 — Livewire GoalForm + GoalList + ProjectForm + ProjectList, halaman /goals + /projects, nav update, Dashboard widget, GoalSeeder + ProjectSeeder, 44 feature tests. Menyelesaikan EPIC-004.
+- **Ticket:** TASK-0016
+- **Progress:** TASK-0016 selesai 100% dan EPIC-004 selesai penuh. GoalForm (isEditMode readonly goal_type, conditional target_date) + GoalList (withCount projects, ownership guard updateStatus, archive Gate) + ProjectForm (userGoals computed, goal select dropdown) + ProjectList (limit widget, progress bar, withCount tasks, with goal). Halaman /goals + /projects. Nav: hapus Tasks sementara, tambah "Projects & Goals". Dashboard: ProjectList widget limit=3. GoalSeeder(6) + ProjectSeeder(6+tasks). 44 feature tests (10+12+9+13).
+- **Kendala:** (1) assertDatabaseHas target_date — PostgreSQL menyimpan date sebagai timestamp string. (2) GoalList::updateStatus menggunakan Gate('update') yang menolak completed goals (policy hanya izinkan active).
+- **Solusi:** (1) Hapus target_date dari assertDatabaseHas, cek via Model cast. (2) Ganti gate check dengan ownership check langsung di component.
+- **Keputusan:** GoalList authorization untuk updateStatus menggunakan ownership check (`user_id === auth()->id()`) bukan gate policy — karena policy 'update' sengaja dibatasi ke active goals saja untuk editability, sedangkan status transition tidak terbatas oleh status saat ini di level UI (dihandle state machine di Action).
+- **File yang Berubah:** `app/Livewire/Goals/GoalForm.php` (baru), `app/Livewire/Goals/GoalList.php` (baru), `app/Livewire/Projects/ProjectForm.php` (baru), `app/Livewire/Projects/ProjectList.php` (baru), `resources/views/livewire/goals/*.blade.php` (baru x2), `resources/views/livewire/projects/*.blade.php` (baru x2), `resources/views/livewire/pages/goals/index.blade.php` (baru), `resources/views/livewire/pages/projects/index.blade.php` (baru), `routes/web.php` (update), `resources/views/livewire/layout/navigation.blade.php` (update), `resources/views/dashboard.blade.php` (tambah ProjectList widget), `database/seeders/GoalSeeder.php` (baru), `database/seeders/ProjectSeeder.php` (baru), `database/seeders/DatabaseSeeder.php` (update), `tests/Feature/Projects/GoalFormTest.php` (baru, 10 tests), `tests/Feature/Projects/GoalListTest.php` (baru, 12 tests), `tests/Feature/Projects/ProjectFormTest.php` (baru, 9 tests), `tests/Feature/Projects/ProjectListTest.php` (baru, 13 tests), `tickets/tasks/TASK-0016-*.md` (status→Done), `tickets/epics/EPIC-004-*.md` (status→Done), `docs/tracking/*`, `SESSION.md`
+- **Testing:** `php artisan test --filter=Projects` → 85 passed (sebelum fix: 83); `php artisan test` → 302 passed (416 assertions); `vendor/bin/pint` → 3 fixes (GoalList, ProjectList, ProjectSeeder), clean.
+- **Catatan:** EPIC-004 (Projects & Goals) selesai penuh — 3 TASK (TASK-0014, TASK-0015, TASK-0016). RecalculateProjectProgress listener kini aktif. Navigation primer sudah memiliki 3 dari 6 item Blueprint: Today, Inbox, Projects & Goals.
+- **Next Session:** Kerjakan FEAT-0005 — Kickoff EPIC-005 (Knowledge Base/Notes). Baca FSD Modul 4, Database Spec A.6, pecah menjadi TASK. Sambungkan `CreatesNoteFromInbox` contract dari EPIC-002.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 15)
+
+- **Target:** Menyelesaikan TASK-0015 — GoalFactory, ProjectFactory, GoalPolicy, ProjectPolicy, 6 Form Requests, Actions Goal + Project, RecalculateProjectProgress, update Listener, 69 unit tests.
+- **Ticket:** TASK-0015
+- **Progress:** TASK-0015 selesai 100%. GoalFactory (8 state methods). ProjectFactory (8 state methods). GoalPolicy (6 methods) + ProjectPolicy (5 methods), terdaftar di AuthServiceProvider. 6 Form Requests. 2 Exceptions (InvalidGoalTransitionException + InvalidProjectTransitionException). 8 Actions: CreateGoal (TimeBound guard), UpdateGoal (strip goal_type/status), UpdateGoalStatus (allowedTransitions), ArchiveGoal, CreateProject (goal ownership guard), UpdateProject (strip status/progress), UpdateProjectStatus (allowedTransitions), ArchiveProject, RecalculateProjectProgress (formula done/total*100, auto-complete). UpdateProjectProgress listener: stub Log → panggil RecalculateProjectProgress nyata. 9 test files, 69 unit tests baru.
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** `RecalculateProjectProgress` tidak auto-complete jika tidak ada task (progress tetap 0) — konsisten dengan FSD 3.2 "total > 0" rule. `already completed project` juga tidak throw exception saat recalculate — progress tetap diupdate, status tidak diubah (sudah completed).
+- **File yang Berubah:** (lihat todo_list modified_files) — 32 files baru/diubah total.
+- **Testing:** `php artisan test --filter=Projects` → 41 passed; `php artisan test` → 258 passed (358 assertions); `vendor/bin/pint` → 6 fixes, clean.
+- **Catatan:** 258 tests total melampaui target. UpdateProjectProgress listener kini benar-benar fungsional — triage InboxItem ke Task yang ber-project_id akan otomatis recalculate progress Project.
+- **Next Session:** Kerjakan TASK-0016 — Livewire GoalForm + GoalList + ProjectForm + ProjectList, halaman /goals + /projects, nav, Dashboard widget, 34+ feature tests, GoalSeeder + ProjectSeeder.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 14)
+
+- **Target:** Menyelesaikan TASK-0014 — Migrations goals + projects + FK tasks.project_id, Enum GoalType/GoalStatus/ProjectStatus, Model Goal + Project.
+- **Ticket:** TASK-0014
+- **Progress:** TASK-0014 selesai 100%. 3 Enum: GoalType (TimeBound/Ongoing+label), GoalStatus (Active/Completed/Archived+allowedTransitions/isActive), ProjectStatus (idem). Migration create_goals_table (10 kolom, FK restrict, 2 index, check pgsql). Migration create_projects_table (11 kolom, FK restrict+nullOnDelete, progress unsignedTinyInt, 2 index, check pgsql). Migration add_project_id_fk D-009 (pgsql only, SET NULL). Model Goal (6 scopes incl overdue). Model Project (4 scopes, hasMany Task). Task::project() diperbarui dari string FQCN ke import langsung. D-009 resolved.
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** Task::project() sebelumnya menggunakan string FQCN `'App\Domain\Projects\Models\Project'` sebagai workaround EPIC-003. Setelah Project class tersedia, langsung diperbarui ke import proper — tidak perlu ADR baru.
+- **File yang Berubah:** `app/Domain/Projects/Enums/GoalType.php` (baru), `app/Domain/Projects/Enums/GoalStatus.php` (baru), `app/Domain/Projects/Enums/ProjectStatus.php` (baru), `database/migrations/2026_07_26_151520_create_goals_table.php` (baru), `database/migrations/2026_07_26_151521_create_projects_table.php` (baru), `database/migrations/2026_07_26_151522_add_project_id_fk_to_tasks_table.php` (baru), `app/Domain/Projects/Models/Goal.php` (baru), `app/Domain/Projects/Models/Project.php` (baru), `app/Domain/Tasks/Models/Task.php` (update project() relation), `tickets/tasks/TASK-0014-*.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→TASK-0015), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md`
+- **Testing:** `php artisan migrate:fresh` → 12 migrations sukses; `db:table` verified (goals 10 col, projects 11 col, tasks FK active); `php artisan test` → 189 passed (275 assertions); `vendor/bin/pint` → 1 fix (projects migration), clean.
+- **Catatan:** D-009 resolved — FK `tasks_project_id_foreign` aktif di PostgreSQL. `CreateTask::projectsTableExists()` guard kini otomatis aktif. Namespace domain `App\Domain\Projects\` untuk Goal dan Project.
+- **Next Session:** Kerjakan TASK-0015 — GoalFactory, ProjectFactory, GoalPolicy, ProjectPolicy, 6 Form Requests, 8 Actions + RecalculateProjectProgress, update UpdateProjectProgress listener, 2 Exceptions, 70+ unit tests.
+
+---
+
+## Sesi — 2026-07-26 (Sesi 13)
+
+- **Target:** FEAT-0004 — Kickoff EPIC-004 (Projects & Goals): baca FSD Modul 3 + Database Spec A.3+A.4, pecah EPIC-004 menjadi 3 TASK granular, perbarui dokumentasi tracking.
+- **Ticket:** FEAT-0004
+- **Progress:** FEAT-0004 selesai 100%. Dibuat 4 file tiket: FEAT-0004 (kickoff, Done), TASK-0014 (migrations+enum+model), TASK-0015 (factory+policy+actions+RecalculateProjectProgress+unit tests), TASK-0016 (Livewire+feature tests+seeder). Dokumentasi tracking diperbarui lengkap.
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** Tidak ada keputusan baru — D-009 (FK tasks.project_id) di-resolve di TASK-0014 via migration ALTER TABLE. Namespace domain `App\Domain\Projects\` untuk Goals dan Projects karena keduanya satu EPIC dan saling terkait erat.
+- **File yang Berubah:** `tickets/features/FEAT-0004-kickoff-projects-goals.md` (baru, Done), `tickets/tasks/TASK-0014-migrations-models-goal-project.md` (baru), `tickets/tasks/TASK-0015-factory-policy-actions-goal-project.md` (baru), `tickets/tasks/TASK-0016-livewire-goal-project-ui-tests-seeder.md` (baru), `docs/tracking/CURRENT_TASK.md` (→TASK-0014), `docs/tracking/NEXT_TASK.md` (Sprint 5 antrian), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md` (sesi ini)
+- **Testing:** Tidak ada testing — hanya pembuatan tiket dan dokumentasi.
+- **Catatan:** EPIC-004 dipecah mengikuti pola yang sama dengan EPIC-001/002/003. TASK-0014 lebih besar dari TASK-0011 karena ada 3 Enum, 2 Model, 2 migration baru, dan 1 migration ALTER (D-009). TASK-0015 mencakup `RecalculateProjectProgress` — implementasi nyata dari stub `UpdateProjectProgress` listener di TASK-0012.
+- **Next Session:** Kerjakan TASK-0014 — migrations goals+projects+FK tasks.project_id, Enum GoalType+GoalStatus+ProjectStatus, Model Goal+Project. Baca file tiket dan Database Spec A.3+A.4 sebelum mulai.
+
+---
+
 ## Sesi — 2026-07-26 (Sesi 12)
 
 - **Target:** Menyelesaikan TASK-0013 — Livewire TaskForm + TaskList, route /tasks, dashboard widget, nav link, TaskSeeder, 21 feature tests. Menyelesaikan EPIC-003.

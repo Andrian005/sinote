@@ -15,6 +15,39 @@
 
 ---
 
+### EPIC-004 — Projects & Goals
+- Selesai: 2026-07-26
+- File: `tickets/epics/EPIC-004-projects-goals.md`
+- Catatan singkat: EPIC lengkap — 3 TASK (TASK-0014, TASK-0015, TASK-0016). Migration goals+projects+FK D-009, 3 Enum, 2 Models. 9 Actions + RecalculateProjectProgress + UpdateProjectProgress listener nyata. 4 Livewire components, /goals + /projects routes, nav "Projects & Goals" primer, Dashboard widget. 302 tests (416 assertions) hijau.
+
+### TASK-0016 — Livewire GoalForm + GoalList + ProjectForm + ProjectList + Feature Tests + Seeders
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0016-livewire-goal-project-ui-tests-seeder.md`
+- Catatan singkat: GoalForm(isEditMode, goal_type readonly) + GoalList(withCount, filter, #[On goal-saved]) + ProjectForm(userGoals computed, goal select) + ProjectList(limit widget, progress bar, #[On project-saved]). Halaman /goals + /projects. Nav "Projects & Goals" (hapus Tasks link sementara). Dashboard ProjectList widget limit=3. GoalSeeder(6) + ProjectSeeder(6+tasks). 10 GoalFormTest + 12 GoalListTest + 9 ProjectFormTest + 13 ProjectListTest = 44 feature tests. Fix: GoalList::updateStatus ownership check (bukan gate 'update'), assertDatabaseHas date format. 302 tests hijau, pint clean.
+
+---
+
+### TASK-0015 — GoalFactory + ProjectFactory, Policies, Form Requests, Actions, Unit Tests
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0015-factory-policy-actions-goal-project.md`
+- Catatan singkat: GoalFactory(8 states) + ProjectFactory(8 states), GoalPolicy(6 methods) + ProjectPolicy(5 methods), 6 Form Requests (StoreGoal/UpdateGoal/UpdateGoalStatus/StoreProject/UpdateProject/UpdateProjectStatus), 2 Exceptions, 8 Actions (CreateGoal/UpdateGoal/UpdateGoalStatus/ArchiveGoal/CreateProject/UpdateProject/UpdateProjectStatus/ArchiveProject/RecalculateProjectProgress), UpdateProjectProgress listener stub→implementasi nyata; 69 unit tests baru → total 258 tests (358 assertions) hijau, pint clean.
+
+---
+
+### TASK-0014 — Migrations goals + projects + FK tasks.project_id, Enum, Models Goal + Project
+- Selesai: 2026-07-26
+- File: `tickets/tasks/TASK-0014-migrations-models-goal-project.md`
+- Catatan singkat: 3 migrations (create_goals_table 10 col, create_projects_table 11 col, add_fk D-009 pgsql only); 3 Enum (GoalType+label, GoalStatus+allowedTransitions, ProjectStatus+allowedTransitions); Model Goal (6 scopes) + Project (4 scopes, hasMany Task); Task::project() diperbarui dari string FQCN ke import class; 189 tests hijau, pint clean.
+
+---
+
+### FEAT-0004 — Kickoff EPIC-004 (Projects & Goals) — Pemecahan Menjadi TASK
+- Selesai: 2026-07-26
+- File: `tickets/features/FEAT-0004-kickoff-projects-goals.md`
+- Catatan singkat: EPIC-004 dipecah menjadi TASK-0014 (migrations goals+projects+FK tasks.project_id D-009+enum+model), TASK-0015 (factory+policy+actions+RecalculateProjectProgress+unit tests), TASK-0016 (Livewire+feature tests+seeder); NEXT_TASK.md diperbarui Sprint 5; TASK-0014 menjadi tiket aktif.
+
+---
+
 ### EPIC-003 — Tasks (Unit Eksekusi Harian)
 - Selesai: 2026-07-26
 - File: `tickets/epics/EPIC-003-tasks.md`

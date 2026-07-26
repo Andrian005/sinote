@@ -2,29 +2,30 @@
 
 namespace App\Listeners;
 
+use App\Domain\Projects\Actions\RecalculateProjectProgress;
+use App\Domain\Projects\Actions\UpdateProjectStatus;
+use App\Domain\Projects\Models\Project;
 use App\Domain\Tasks\Events\TaskCompleted;
-use Illuminate\Support\Facades\Log;
 
 /**
- * Stub listener for TaskCompleted event.
- *
- * Full implementation (recalculate Project progress from Task completion ratio)
- * will be added in EPIC-004 when the Projects module is built.
- * Registered now to ensure the event architecture is wired up correctly.
+ * Listener for TaskCompleted event.
+ * Recalculates the progress of the Project the completed Task belongs to.
+ * If progress reaches 100%, the Project is automatically marked as completed.
  */
 class UpdateProjectProgress
 {
     public function handle(TaskCompleted $event): void
     {
-        // EPIC-003 stub: log the event so it is observable during development.
-        // Replace with actual progress recalculation in EPIC-004.
         if ($event->task->project_id === null) {
             return;
         }
 
-        Log::debug('UpdateProjectProgress: Task completed — recalculation pending EPIC-004.', [
-            'task_id' => $event->task->id,
-            'project_id' => $event->task->project_id,
-        ]);
+        $project = Project::find($event->task->project_id);
+
+        if ($project === null) {
+            return;
+        }
+
+        (new RecalculateProjectProgress(new UpdateProjectStatus))->execute($project);
     }
 }
