@@ -3,10 +3,8 @@
 namespace App\Domain\Tasks\Enums;
 
 /**
- * Task priority level.
- *
- * Used for sorting on the Dashboard (high → medium → low, due_date ASC).
- * Default is Medium (FSD Modul 2.1, Database Spec A.5).
+ * Task priority level. Default is Medium.
+ * Sorted high → medium → low, with due_date ASC on the Dashboard.
  */
 enum TaskPriority: string
 {
@@ -14,10 +12,7 @@ enum TaskPriority: string
     case Medium = 'medium';
     case High = 'high';
 
-    /**
-     * Numeric sort weight — higher is more urgent.
-     * Useful for raw ORDER BY without DB-level enum ordering.
-     */
+    /** Numeric sort weight — higher is more urgent. */
     public function weight(): int
     {
         return match ($this) {
@@ -27,9 +22,6 @@ enum TaskPriority: string
         };
     }
 
-    /**
-     * Tailwind CSS color class for the priority badge in the UI.
-     */
     public function badgeClass(): string
     {
         return match ($this) {
@@ -39,9 +31,6 @@ enum TaskPriority: string
         };
     }
 
-    /**
-     * Label in Indonesian for display in the UI.
-     */
     public function label(): string
     {
         return match ($this) {

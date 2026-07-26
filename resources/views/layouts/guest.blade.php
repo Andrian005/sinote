@@ -12,14 +12,8 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-        
-        <style>
-            body {
-                font-family: 'Inter', sans-serif;
-            }
-        </style>
     </head>
-    <body class="antialiased bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div class="min-h-screen flex items-center justify-center p-4">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
@@ -31,7 +25,7 @@
                 </div>
 
                 <div class="bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-white/20">
-                    {!! $slot !!}
+                    {{ $slot }}
                 </div>
             </div>
         </div>

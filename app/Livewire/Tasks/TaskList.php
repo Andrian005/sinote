@@ -7,6 +7,7 @@ use App\Domain\Tasks\Actions\UpdateTaskStatus;
 use App\Domain\Tasks\Enums\TaskStatus;
 use App\Domain\Tasks\Exceptions\InvalidTaskTransitionException;
 use App\Domain\Tasks\Models\Task;
+use App\Livewire\Concerns\WithFlashMessage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
@@ -16,27 +17,11 @@ use Livewire\WithPagination;
 
 class TaskList extends Component
 {
-    use WithPagination;
+    use WithFlashMessage, WithPagination;
 
-    /**
-     * Active filter.
-     * Accepted: 'active' (todo+in_progress), 'done', 'archived', 'all'
-     */
     public string $filter = 'active';
 
-    /**
-     * When > 0, pagination is hidden and results capped at this number.
-     * Used by the Dashboard widget (limit=5, showPagination=false).
-     */
     public int $limit = 0;
-
-    public ?string $flash = null;
-
-    public bool $flashIsError = false;
-
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
 
     public function mount(string $filter = 'active', int $limit = 0): void
     {
@@ -44,14 +29,6 @@ class TaskList extends Component
         $this->limit = $limit;
     }
 
-    // -------------------------------------------------------------------------
-    // Data
-    // -------------------------------------------------------------------------
-
-    /**
-     * Paginated (or limited) tasks for the authenticated user.
-     * Ordered by priority weight DESC, due_date ASC (nulls last).
-     */
     public function getTasksProperty(): LengthAwarePaginator|Collection
     {
         $query = Task::where('user_id', auth()->id())
@@ -71,10 +48,6 @@ class TaskList extends Component
 
         return $query->paginate(15);
     }
-
-    // -------------------------------------------------------------------------
-    // Actions
-    // -------------------------------------------------------------------------
 
     public function updateStatus(string $taskId, string $newStatus): void
     {
@@ -125,37 +98,12 @@ class TaskList extends Component
         }
     }
 
-    // -------------------------------------------------------------------------
-    // Event listener
-    // -------------------------------------------------------------------------
-
-    /** Refresh task list when a task is saved via TaskForm. */
     #[On('task-saved')]
     public function refreshList(): void
     {
         $this->resetPage();
         unset($this->tasks);
     }
-
-    // -------------------------------------------------------------------------
-    // Flash helpers
-    // -------------------------------------------------------------------------
-
-    public function clearFlash(): void
-    {
-        $this->flash = null;
-        $this->flashIsError = false;
-    }
-
-    private function setFlash(string $message, bool $error = false): void
-    {
-        $this->flash = $message;
-        $this->flashIsError = $error;
-    }
-
-    // -------------------------------------------------------------------------
-    // Render
-    // -------------------------------------------------------------------------
 
     public function render()
     {

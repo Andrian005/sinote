@@ -11,11 +11,6 @@ class UpdateGoalStatus
     /**
      * Transition a Goal to a new status, enforcing the state machine.
      *
-     * State machine (FSD 3.1 / GoalStatus::allowedTransitions()):
-     *   active    → completed, archived
-     *   completed → active  (reopen)
-     *   archived  → (final)
-     *
      * @throws InvalidGoalTransitionException
      */
     public function execute(Goal $goal, GoalStatus $newStatus): Goal

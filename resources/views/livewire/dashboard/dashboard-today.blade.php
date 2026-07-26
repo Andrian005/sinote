@@ -1,5 +1,5 @@
 <div>
-    {{-- Stats Bar --}}
+    {{-- Stats bar --}}
     <div class="grid grid-cols-3 gap-4 mb-6">
         <div class="bg-blue-50 rounded-lg p-4 text-center">
             <p class="text-2xl font-bold text-blue-700">{{ $stats['tasks'] }}</p>
@@ -37,7 +37,7 @@
 
         @if ($todayTasks->isEmpty())
             <div class="py-8 text-center">
-                <p class="text-2xl mb-2">🎉</p>
+                <p class="text-2xl mb-2" aria-hidden="true">🎉</p>
                 <p class="text-sm font-medium text-gray-600">Tidak ada task hari ini!</p>
                 <p class="text-xs text-gray-400 mt-1">Semua task sudah selesai atau belum ada yang jatuh tempo.</p>
             </div>
@@ -49,7 +49,6 @@
                             <div class="flex items-center gap-2 flex-wrap">
                                 <span class="text-sm text-gray-900">{{ $task->title }}</span>
 
-                                {{-- Priority badge --}}
                                 <span @class([
                                     'inline-flex px-1.5 py-0.5 text-xs font-medium rounded-full',
                                     $task->priority->badgeClass(),
@@ -57,7 +56,6 @@
                                     {{ $task->priority->label() }}
                                 </span>
 
-                                {{-- Status badge --}}
                                 @if ($task->status->value === 'in_progress')
                                     <span class="inline-flex px-1.5 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-700">
                                         Dikerjakan
@@ -65,15 +63,14 @@
                                 @endif
                             </div>
 
-                            {{-- Due date --}}
                             @if ($task->due_date)
+                                @php $overdue = $task->due_date->isPast(); @endphp
                                 <p @class([
                                     'mt-0.5 text-xs',
-                                    'text-red-500 font-medium' => $task->due_date->isPast(),
-                                    'text-gray-400' => ! $task->due_date->isPast(),
+                                    'text-red-500 font-medium' => $overdue,
+                                    'text-gray-400'            => ! $overdue,
                                 ])>
-                                    {{ $task->due_date->isPast() ? 'Terlambat: ' : 'Hari ini: ' }}
-                                    {{ $task->due_date->translatedFormat('d M Y') }}
+                                    {{ $overdue ? 'Terlambat: ' : 'Hari ini: ' }}{{ $task->due_date->translatedFormat('d M Y') }}
                                 </p>
                             @endif
                         </div>
@@ -94,7 +91,7 @@
         <livewire:projects.project-list :limit="3" />
     </div>
 
-    {{-- Habit placeholder --}}
+    {{-- Habits (placeholder) --}}
     <div class="bg-white shadow-sm sm:rounded-lg p-6">
         <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Habits</h3>
         <div class="flex items-center gap-3 py-4 text-gray-400">

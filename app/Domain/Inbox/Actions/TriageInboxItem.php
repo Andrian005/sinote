@@ -13,9 +13,6 @@ use InvalidArgumentException;
 
 class TriageInboxItem
 {
-    /**
-     * Accepted target types for triage (FSD Modul 1 — Triage Rules).
-     */
     private const VALID_TYPES = ['task', 'note'];
 
     public function __construct(
@@ -26,19 +23,12 @@ class TriageInboxItem
     /**
      * Convert an unprocessed InboxItem into a Task or Note.
      *
-     * Steps (FSD 1.2 — Triage):
-     *  1. Guard: item must be unprocessed.
-     *  2. Delegate creation to the injected contract implementation.
-     *  3. Stamp the InboxItem as processed with a back-reference to the
-     *     created entity (informational only — not a FK, per Database Spec E.2).
+     * Back-reference fields (converted_to_type, converted_to_id) are
+     * informational only — not foreign keys, so the target entity can be
+     * deleted without breaking InboxItem history.
      *
-     * @param  User  $user  The owner performing the triage.
-     * @param  InboxItem  $inboxItem  The item being triaged.
-     * @param  string  $targetType  'task' or 'note'.
-     * @return Model The entity (Task or Note) that was created.
-     *
-     * @throws InboxItemAlreadyProcessedException If item is not unprocessed.
-     * @throws InvalidArgumentException If targetType is not supported.
+     * @throws InboxItemAlreadyProcessedException
+     * @throws InvalidArgumentException
      */
     public function execute(User $user, InboxItem $inboxItem, string $targetType): Model
     {

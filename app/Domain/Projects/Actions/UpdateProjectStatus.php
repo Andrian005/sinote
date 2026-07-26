@@ -11,11 +11,6 @@ class UpdateProjectStatus
     /**
      * Transition a Project to a new status, enforcing the state machine.
      *
-     * State machine (FSD 3.2 / ProjectStatus::allowedTransitions()):
-     *   active    → completed, archived
-     *   completed → active  (reopen)
-     *   archived  → (final)
-     *
      * @throws InvalidProjectTransitionException
      */
     public function execute(Project $project, ProjectStatus $newStatus): Project

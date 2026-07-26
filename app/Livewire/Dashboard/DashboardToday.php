@@ -12,24 +12,11 @@ use Livewire\Component;
 
 class DashboardToday extends Component
 {
-    // -------------------------------------------------------------------------
-    // Computed: Today's Tasks
-    // -------------------------------------------------------------------------
-
     /**
      * Tasks relevant for today (FSD 5.1 — Today Aggregation View).
      *
-     * Criteria:
-     *   - Owner: current user
-     *   - Status: todo OR in_progress
-     *   - Due date: <= today (overdue + today) OR null (no deadline)
-     *   - Sort: priority DESC (high→medium→low), then due_date ASC NULLS LAST
-     *   - Limit: 7
-     *
-     * Tasks with no due_date are included but sorted last so urgent tasks
-     * with upcoming deadlines appear at the top.
-     *
-     * @return Collection<int, Task>
+     * Criteria: owner is current user, status todo/in_progress, due_date <= today OR null,
+     * sorted by priority DESC then due_date ASC NULLS LAST, limit 7.
      */
     public function getTodayTasksProperty(): Collection
     {
@@ -45,16 +32,8 @@ class DashboardToday extends Component
             ->get();
     }
 
-    // -------------------------------------------------------------------------
-    // Computed: Stats Bar
-    // -------------------------------------------------------------------------
-
     /**
-     * Dashboard stats bar counts.
-     *
-     * Three lightweight COUNT queries — no joins needed.
-     *
-     * @return array{tasks: int, projects: int, inbox: int}
+     * Dashboard stats bar counts (tasks active, projects active, inbox unprocessed).
      */
     public function getStatsProperty(): array
     {
@@ -75,10 +54,6 @@ class DashboardToday extends Component
         ];
     }
 
-    // -------------------------------------------------------------------------
-    // Event listeners — refresh on task/project changes
-    // -------------------------------------------------------------------------
-
     #[On('task-saved')]
     public function refreshOnTaskSaved(): void
     {
@@ -90,10 +65,6 @@ class DashboardToday extends Component
     {
         unset($this->stats);
     }
-
-    // -------------------------------------------------------------------------
-    // Render
-    // -------------------------------------------------------------------------
 
     public function render()
     {

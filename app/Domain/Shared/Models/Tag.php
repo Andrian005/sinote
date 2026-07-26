@@ -28,22 +28,11 @@ class Tag extends Model
         return TagFactory::new();
     }
 
-    // -------------------------------------------------------------------------
-    // Relationships
-    // -------------------------------------------------------------------------
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * All Tasks tagged with this Tag.
-     *
-     * The related model class is referenced as a string to avoid a hard
-     * dependency on modules that may not exist yet. When the Task module is
-     * built (EPIC-003) this will resolve correctly — no change needed here.
-     */
     public function tasks(): MorphToMany
     {
         return $this->morphedByMany(
@@ -52,9 +41,6 @@ class Tag extends Model
         );
     }
 
-    /**
-     * All Projects tagged with this Tag.
-     */
     public function projects(): MorphToMany
     {
         return $this->morphedByMany(
@@ -63,9 +49,6 @@ class Tag extends Model
         );
     }
 
-    /**
-     * All Notes tagged with this Tag.
-     */
     public function notes(): MorphToMany
     {
         return $this->morphedByMany(
@@ -74,9 +57,6 @@ class Tag extends Model
         );
     }
 
-    /**
-     * All Habits tagged with this Tag.
-     */
     public function habits(): MorphToMany
     {
         return $this->morphedByMany(
@@ -84,13 +64,4 @@ class Tag extends Model
             'taggable',
         );
     }
-
-    // -------------------------------------------------------------------------
-    // Normalisation note
-    // -------------------------------------------------------------------------
-    //
-    // Tag names are always stored as lowercase. Normalisation is the
-    // responsibility of the CreateTag Action — not enforced here via a mutator
-    // so that the Action remains the single source of business logic (CORE_RULES § 2).
-    // This comment serves as the in-code documentation required by TASK-0005 AC.
 }

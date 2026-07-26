@@ -11,23 +11,17 @@ use InvalidArgumentException;
 class CreateGoal
 {
     /**
-     * Create a new Goal for the given user.
+     * Create a new Goal. goal_type is immutable after creation.
+     * target_date is required when goal_type is 'time_bound'.
      *
-     * goal_type is immutable after creation (FSD 3.1).
-     * For time_bound goals, target_date is required — throw if missing.
-     *
-     * @param  array{title: string, goal_type: string, description?: string|null, target_date?: string|null}  $data
-     *
-     * @throws InvalidArgumentException if goal_type=time_bound and target_date is missing
+     * @throws InvalidArgumentException if goal_type=time_bound and target_date is missing.
      */
     public function execute(User $user, array $data): Goal
     {
         $goalType = GoalType::from($data['goal_type']);
 
         if ($goalType === GoalType::TimeBound && empty($data['target_date'])) {
-            throw new InvalidArgumentException(
-                'target_date is required for time_bound goals.'
-            );
+            throw new InvalidArgumentException('target_date is required for time_bound goals.');
         }
 
         return Goal::create([

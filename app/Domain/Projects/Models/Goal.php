@@ -43,10 +43,6 @@ class Goal extends Model
         ];
     }
 
-    // -------------------------------------------------------------------------
-    // Relationships
-    // -------------------------------------------------------------------------
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -56,10 +52,6 @@ class Goal extends Model
     {
         return $this->hasMany(Project::class);
     }
-
-    // -------------------------------------------------------------------------
-    // Scopes
-    // -------------------------------------------------------------------------
 
     public function scopeActive(Builder $query): void
     {
@@ -86,9 +78,6 @@ class Goal extends Model
         $query->where('goal_type', GoalType::Ongoing);
     }
 
-    /**
-     * Overdue time-bound goals: active + past target_date.
-     */
     public function scopeOverdue(Builder $query): void
     {
         $query->where('status', GoalStatus::Active)

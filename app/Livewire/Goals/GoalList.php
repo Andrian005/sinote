@@ -7,6 +7,7 @@ use App\Domain\Projects\Actions\UpdateGoalStatus;
 use App\Domain\Projects\Enums\GoalStatus;
 use App\Domain\Projects\Exceptions\InvalidGoalTransitionException;
 use App\Domain\Projects\Models\Goal;
+use App\Livewire\Concerns\WithFlashMessage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\On;
@@ -15,13 +16,9 @@ use Livewire\WithPagination;
 
 class GoalList extends Component
 {
-    use WithPagination;
+    use WithFlashMessage, WithPagination;
 
     public string $filter = 'active';
-
-    public ?string $flash = null;
-
-    public bool $flashIsError = false;
 
     public function mount(string $filter = 'active'): void
     {
@@ -51,7 +48,6 @@ class GoalList extends Component
             return;
         }
 
-        // Ownership check only — state machine guard is in the Action.
         if ($goal->user_id !== auth()->id()) {
             $this->setFlash('Anda tidak memiliki akses untuk melakukan aksi ini.', error: true);
 
@@ -95,18 +91,6 @@ class GoalList extends Component
     {
         $this->resetPage();
         unset($this->goals);
-    }
-
-    public function clearFlash(): void
-    {
-        $this->flash = null;
-        $this->flashIsError = false;
-    }
-
-    private function setFlash(string $message, bool $error = false): void
-    {
-        $this->flash = $message;
-        $this->flashIsError = $error;
     }
 
     public function render()

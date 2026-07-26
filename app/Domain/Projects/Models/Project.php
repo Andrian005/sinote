@@ -44,36 +44,20 @@ class Project extends Model
         ];
     }
 
-    // -------------------------------------------------------------------------
-    // Relationships
-    // -------------------------------------------------------------------------
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Optional parent Goal.
-     * withDefault(null) — returns null (not empty Model) when goal_id is null.
-     */
     public function goal(): BelongsTo
     {
         return $this->belongsTo(Goal::class)->withDefault(null);
     }
 
-    /**
-     * Tasks belonging to this Project.
-     * Used by RecalculateProjectProgress to compute completion percentage.
-     */
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }
-
-    // -------------------------------------------------------------------------
-    // Scopes
-    // -------------------------------------------------------------------------
 
     public function scopeActive(Builder $query): void
     {
@@ -90,9 +74,6 @@ class Project extends Model
         $query->where('status', ProjectStatus::Archived);
     }
 
-    /**
-     * Active projects with a past due_date.
-     */
     public function scopeOverdue(Builder $query): void
     {
         $query->where('status', ProjectStatus::Active)

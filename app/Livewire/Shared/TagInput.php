@@ -73,12 +73,7 @@ class TagInput extends Component
     {
         $tag = Tag::find($tagId);
 
-        if (! $tag) {
-            return;
-        }
-
-        // Check authorization
-        if (Gate::denies('view', $tag)) {
+        if (! $tag || Gate::denies('view', $tag)) {
             abort(403, 'You cannot attach tags that do not belong to you.');
         }
 
@@ -88,12 +83,9 @@ class TagInput extends Component
             return;
         }
 
-        $action = new AttachTag;
-        $action->execute($tag, $taggable);
+        (new AttachTag)->execute($tag, $taggable);
 
         $this->searchQuery = '';
-
-        // Force refresh computed properties
         unset($this->attachedTags, $this->availableTags);
     }
 
@@ -109,17 +101,10 @@ class TagInput extends Component
             return;
         }
 
-        // Create or get existing tag
-        $createAction = new CreateTag;
-        $tag = $createAction->execute(auth()->id(), $this->searchQuery);
-
-        // Attach the tag
-        $attachAction = new AttachTag;
-        $attachAction->execute($tag, $taggable);
+        $tag = (new CreateTag)->execute(auth()->id(), $this->searchQuery);
+        (new AttachTag)->execute($tag, $taggable);
 
         $this->searchQuery = '';
-
-        // Force refresh computed properties
         unset($this->attachedTags, $this->availableTags);
     }
 
@@ -127,12 +112,7 @@ class TagInput extends Component
     {
         $tag = Tag::find($tagId);
 
-        if (! $tag) {
-            return;
-        }
-
-        // Check authorization
-        if (Gate::denies('view', $tag)) {
+        if (! $tag || Gate::denies('view', $tag)) {
             abort(403, 'You cannot detach tags that do not belong to you.');
         }
 
@@ -142,10 +122,8 @@ class TagInput extends Component
             return;
         }
 
-        $action = new DetachTag;
-        $action->execute($tag, $taggable);
+        (new DetachTag)->execute($tag, $taggable);
 
-        // Force refresh computed properties
         unset($this->attachedTags);
     }
 

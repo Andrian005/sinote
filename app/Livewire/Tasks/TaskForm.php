@@ -11,11 +11,6 @@ use Throwable;
 
 class TaskForm extends Component
 {
-    // -------------------------------------------------------------------------
-    // Properties
-    // -------------------------------------------------------------------------
-
-    /** When set, the component operates in edit mode. */
     public ?string $taskId = null;
 
     #[Validate('required|string|min:1|max:255')]
@@ -30,14 +25,10 @@ class TaskForm extends Component
     #[Validate('nullable|date')]
     public ?string $dueDate = null;
 
-    /** Disabled for MVP — project assignment via EPIC-004. */
+    /** Project assignment disabled for MVP — implemented in EPIC-004. */
     public ?string $projectId = null;
 
     public bool $saved = false;
-
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
 
     public function mount(?string $taskId = null): void
     {
@@ -55,10 +46,6 @@ class TaskForm extends Component
             }
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Actions
-    // -------------------------------------------------------------------------
 
     public function save(): void
     {
@@ -96,10 +83,6 @@ class TaskForm extends Component
     {
         $this->saved = false;
     }
-
-    // -------------------------------------------------------------------------
-    // Render
-    // -------------------------------------------------------------------------
 
     public function render()
     {

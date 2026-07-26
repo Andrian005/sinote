@@ -7,11 +7,6 @@ use App\Domain\Projects\Actions\UpdateProjectStatus;
 use App\Domain\Projects\Models\Project;
 use App\Domain\Tasks\Events\TaskCompleted;
 
-/**
- * Listener for TaskCompleted event.
- * Recalculates the progress of the Project the completed Task belongs to.
- * If progress reaches 100%, the Project is automatically marked as completed.
- */
 class UpdateProjectProgress
 {
     public function handle(TaskCompleted $event): void

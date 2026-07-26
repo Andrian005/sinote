@@ -7,10 +7,9 @@ use App\Domain\Projects\Models\Goal;
 class UpdateGoal
 {
     /**
-     * Update the editable attributes of a Goal.
-     *
-     * goal_type is immutable after creation — silently stripped (FSD 3.1).
-     * status must be changed via UpdateGoalStatus — also stripped.
+     * Update editable attributes of a Goal.
+     * goal_type is immutable after creation — stripped here to enforce the invariant.
+     * Status changes must go through UpdateGoalStatus.
      */
     public function execute(Goal $goal, array $data): Goal
     {

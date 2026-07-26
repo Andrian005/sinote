@@ -8,17 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class AttachTag
 {
     /**
-     * Attach a tag to a taggable model (Task, Project, Note, Habit, etc).
-     *
-     * This operation is idempotent — calling it multiple times with the same
-     * tag and model will not create duplicate entries in the taggables table.
-     *
-     * @param  Tag  $tag  The tag to attach
-     * @param  Model  $taggable  The model to tag (must use MorphToMany 'tags' relation)
+     * Attach a tag to a taggable model.
+     * Idempotent — calling multiple times with the same tag will not create duplicates.
      */
     public function execute(Tag $tag, Model $taggable): void
     {
-        // syncWithoutDetaching ensures idempotency — won't create duplicates
         $taggable->tags()->syncWithoutDetaching([$tag->id]);
     }
 }

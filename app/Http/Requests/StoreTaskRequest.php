@@ -19,7 +19,7 @@ class StoreTaskRequest extends FormRequest
             'description' => ['nullable', 'string', 'max:10000'],
             'priority' => ['nullable', 'string', Rule::in(['low', 'medium', 'high'])],
             'due_date' => ['nullable', 'date'],
-            // ownership validated in CreateTask Action, not here
+            // project_id ownership is validated in CreateTask Action, not here
             'project_id' => ['nullable', 'string'],
         ];
     }

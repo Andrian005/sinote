@@ -3,10 +3,7 @@
 namespace App\Domain\Inbox\Enums;
 
 /**
- * InboxItem lifecycle status.
- *
- * Unprocessed → (triage action) → Processed or Discarded.
- * See FSD Module 1 § Business Rules for transition rules.
+ * InboxItem lifecycle: unprocessed → processed | discarded.
  */
 enum InboxItemStatus: string
 {

@@ -2,20 +2,8 @@
     x-data="{ saved: @entangle('saved') }"
     x-init="$watch('saved', value => { if (value) setTimeout(() => $wire.resetSaved(), 3000) })"
 >
-    {{-- Success flash --}}
-    <div
-        x-show="saved"
-        x-transition:leave="transition ease-in duration-500"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="mb-3 px-4 py-2 text-sm text-green-800 bg-green-100 border border-green-200 rounded-md"
-        role="status"
-        aria-live="polite"
-    >
-        Item berhasil disimpan ke Inbox.
-    </div>
+    @include('livewire.partials.save-success', ['message' => 'Item berhasil disimpan ke Inbox.'])
 
-    {{-- Capture form --}}
     <form wire:submit="save" novalidate>
         <div class="relative">
             <textarea
@@ -29,7 +17,6 @@
                 aria-describedby="quick-capture-error quick-capture-counter"
             ></textarea>
 
-            {{-- Character counter --}}
             <span
                 id="quick-capture-counter"
                 class="absolute bottom-2 right-3 text-xs text-gray-400 select-none"
@@ -40,9 +27,7 @@
         </div>
 
         @error('content')
-            <p id="quick-capture-error" class="mt-1 text-xs text-red-600" role="alert">
-                {{ $message }}
-            </p>
+            <p id="quick-capture-error" class="mt-1 text-xs text-red-600" role="alert">{{ $message }}</p>
         @enderror
 
         <div class="mt-3 flex justify-end">

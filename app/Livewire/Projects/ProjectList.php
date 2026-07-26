@@ -7,6 +7,7 @@ use App\Domain\Projects\Actions\UpdateProjectStatus;
 use App\Domain\Projects\Enums\ProjectStatus;
 use App\Domain\Projects\Exceptions\InvalidProjectTransitionException;
 use App\Domain\Projects\Models\Project;
+use App\Livewire\Concerns\WithFlashMessage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
@@ -16,15 +17,11 @@ use Livewire\WithPagination;
 
 class ProjectList extends Component
 {
-    use WithPagination;
+    use WithFlashMessage, WithPagination;
 
     public string $filter = 'active';
 
     public int $limit = 0;
-
-    public ?string $flash = null;
-
-    public bool $flashIsError = false;
 
     public function mount(string $filter = 'active', int $limit = 0): void
     {
@@ -103,18 +100,6 @@ class ProjectList extends Component
     {
         $this->resetPage();
         unset($this->projects);
-    }
-
-    public function clearFlash(): void
-    {
-        $this->flash = null;
-        $this->flashIsError = false;
-    }
-
-    private function setFlash(string $message, bool $error = false): void
-    {
-        $this->flash = $message;
-        $this->flashIsError = $error;
     }
 
     public function render()

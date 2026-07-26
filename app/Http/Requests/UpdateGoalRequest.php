@@ -16,7 +16,7 @@ class UpdateGoalRequest extends FormRequest
         return [
             'title' => ['sometimes', 'required', 'string', 'min:1', 'max:255'],
             'description' => ['nullable', 'string', 'max:10000'],
-            // goal_type intentionally excluded — immutable after creation (FSD 3.1)
+            // goal_type intentionally excluded — immutable after creation
             'target_date' => ['nullable', 'date'],
         ];
     }

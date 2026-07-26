@@ -11,14 +11,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 class CreateProject
 {
     /**
-     * Create a new Project for the given user.
+     * Create a new Project. Default status: active, progress: 0.
+     * If goal_id is provided, validates it belongs to the same user.
      *
-     * If goal_id is provided, validates that the Goal belongs to the same user.
-     * Default status: active, progress: 0.
-     *
-     * @param  array{title: string, description?: string|null, goal_id?: string|null, due_date?: string|null}  $data
-     *
-     * @throws AuthorizationException if goal_id belongs to another user
+     * @throws AuthorizationException if goal_id belongs to another user.
      */
     public function execute(User $user, array $data): Project
     {

@@ -9,14 +9,7 @@ use App\Domain\Inbox\Models\InboxItem;
 class DiscardInboxItem
 {
     /**
-     * Mark an InboxItem as discarded.
-     *
-     * Discarding is only allowed on unprocessed items. Attempting to
-     * discard an already-processed or already-discarded item throws
-     * InboxItemAlreadyProcessedException to preserve lifecycle integrity.
-     *
-     * @param  InboxItem  $inboxItem  The item to discard.
-     * @return bool True on successful update.
+     * Discard an InboxItem. Only unprocessed items may be discarded.
      *
      * @throws InboxItemAlreadyProcessedException
      */

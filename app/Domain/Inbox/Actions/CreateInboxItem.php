@@ -9,16 +9,7 @@ use App\Domain\Shared\Models\User;
 class CreateInboxItem
 {
     /**
-     * Capture a new item into the user's Inbox.
-     *
-     * Content is trimmed before persisting so that leading/trailing
-     * whitespace never reaches the database (FSD 1.1 — capture rules).
-     * Status is always set to 'unprocessed' on creation; callers cannot
-     * override this to maintain the Inbox lifecycle invariant.
-     *
-     * @param  User  $user  The authenticated user capturing the item.
-     * @param  string  $content  Raw content string (trimmed internally).
-     * @return InboxItem The newly created InboxItem.
+     * Capture new item to Inbox. Content is trimmed, status always 'unprocessed'.
      */
     public function execute(User $user, string $content): InboxItem
     {

@@ -12,31 +12,21 @@ class UpdateTaskStatus
     /**
      * Transition a Task to a new status, enforcing the state machine.
      *
-     * State machine (FSD 2.2 / TaskStatus::allowedTransitions()):
-     *   todo        → in_progress, archived
-     *   in_progress → todo, done, archived
-     *   done        → todo  (reopen)
-     *   archived    → (final — no transitions)
-     *
      * Side effects:
-     *   → done:     set completed_at = now(), dispatch TaskCompleted event
-     *   → not done: clear completed_at
+     *   → done:     sets completed_at, dispatches TaskCompleted event.
+     *   → not done: clears completed_at.
      *
      * @throws InvalidTaskTransitionException
      */
     public function execute(Task $task, TaskStatus $newStatus): Task
     {
-        $currentStatus = $task->status;
-
-        if (! in_array($newStatus, $currentStatus->allowedTransitions(), strict: true)) {
-            throw new InvalidTaskTransitionException($currentStatus, $newStatus);
+        if (! in_array($newStatus, $task->status->allowedTransitions(), strict: true)) {
+            throw new InvalidTaskTransitionException($task->status, $newStatus);
         }
-
-        $completedAt = $newStatus === TaskStatus::Done ? now() : null;
 
         $task->update([
             'status' => $newStatus,
-            'completed_at' => $completedAt,
+            'completed_at' => $newStatus === TaskStatus::Done ? now() : null,
         ]);
 
         if ($newStatus === TaskStatus::Done) {
