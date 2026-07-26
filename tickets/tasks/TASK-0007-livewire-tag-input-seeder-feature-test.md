@@ -38,7 +38,7 @@ Feature test menggunakan `tests/Fixtures/FakeTaggable.php` (re-using tabel `user
 - [x] `php artisan test` hijau penuh.
 - [x] `TagInput` dapat di-embed di Blade view lain dengan `<livewire:shared.tag-input :taggableType="..." :taggableId="..." />`.
 - [x] `TagSeeder` berjalan tanpa error: `php artisan db:seed --class=TagSeeder`.
-- [ ] Commit: `tagging: add TagInput Livewire component, feature test, and TagSeeder`.
+- [x] Commit: `tagging: add TagInput Livewire component, feature test, and TagSeeder`.
 - [x] Status EPIC-001 diubah menjadi `Done` di `tickets/epics/EPIC-001-tagging-context.md`.
 - [x] Pindahkan ke `DONE.md`.
 - [x] Jadikan FEAT-0002 atau tiket kickoff EPIC-002 (Inbox) sebagai `CURRENT_TASK.md` baru.

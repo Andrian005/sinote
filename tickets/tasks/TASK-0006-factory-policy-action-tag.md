@@ -34,7 +34,7 @@
 
 - [x] Semua unit test di atas hijau.
 - [x] Policy dipanggil sebelum Action di setiap alur yang melibatkan Tag milik user.
-- [ ] Commit: `tagging: add TagFactory, TagPolicy, and tag actions with unit tests`.
+- [x] Commit: `tagging: add TagFactory, TagPolicy, and tag actions with unit tests`.
 - [x] Pindahkan ke `DONE.md`.
 - [x] Jadikan TASK-0007 sebagai `CURRENT_TASK.md` baru.
 
