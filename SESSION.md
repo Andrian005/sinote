@@ -21,9 +21,22 @@
 - **Next Session:** {apa yang harus dikerjakan sesi berikutnya}
 ```
 
+## Sesi — 2026-07-28
+
+- **Target:** Menyelesaikan TASK-0020 — Livewire ReminderList component, Dashboard widget integration, Feature Tests, ReminderSeeder, dan menutup EPIC-006 (Milestone 1).
+- **Ticket:** TASK-0020
+- **Progress:** TASK-0020 selesai 100% dan EPIC-006 selesai penuh. ReminderList Livewire component (pendingDelivery scope, limit widget mode, H/H-1 urgency badges merah/kuning, empty state). DashboardToday diperbarui: getRemindersCountProperty, #[On reminder-updated] refreshOnReminderUpdated, stats bar dari 3 ke 4 kolom (tambah orange "Reminder Aktif"), conditional widget ReminderList di antara stats bar dan Quick Capture. ReminderListTest (8 tests: visibility, status filtering sent/cancelled/skipped, future filter, empty state, limit). DashboardTodayReminderTest (3 tests: count own, isolate other, future not counted). ReminderSeeder (3 scheduled + 2 sent). DatabaseSeeder diperbarui. 347 tests (470 assertions) hijau, pint clean (3 style fixes).
+- **Kendala:** Tidak ada.
+- **Solusi:** —
+- **Keputusan:** Stats bar DashboardToday menggunakan `getRemindersCountProperty()` sebagai computed property terpisah (bukan dimasukkan ke `getStatsProperty()`) — karena lifecycle refresh-nya berbeda: reminder di-refresh oleh `#[On reminder-updated]`, bukan `task-saved` atau `project-saved`.
+- **File yang Berubah:** `app/Livewire/Notification/ReminderList.php` (baru), `resources/views/livewire/notification/reminder-list.blade.php` (baru), `app/Livewire/Dashboard/DashboardToday.php` (update), `resources/views/livewire/dashboard/dashboard-today.blade.php` (update), `tests/Feature/Notification/ReminderListTest.php` (baru, 8 tests), `tests/Feature/Dashboard/DashboardTodayReminderTest.php` (baru, 3 tests), `database/seeders/ReminderSeeder.php` (baru), `database/seeders/DatabaseSeeder.php` (update), `tickets/tasks/TASK-0020-*.md` (status→Done), `tickets/epics/EPIC-006-*.md` (status→Done), `docs/tracking/CURRENT_TASK.md` (→FEAT-0007), `docs/tracking/NEXT_TASK.md` (Sprint 8), `docs/tracking/DONE.md`, `docs/tracking/CHANGELOG.md`, `SESSION.md`
+- **Testing:** `php artisan test --filter="ReminderList|DashboardTodayReminder"` → 11 passed; `php artisan test` → 347 passed (470 assertions); `vendor/bin/pint` → 3 style fixes (DashboardToday + 2 test files), kemudian `php artisan test --filter="ReminderList|DashboardTodayReminder"` → 11 passed tetap hijau.
+- **Catatan:** EPIC-006 (Deadline Reminder) selesai penuh — 3 TASK (TASK-0018, TASK-0019, TASK-0020). **Milestone 1 (MVP v0.2) selesai** — Dashboard sekarang memiliki 4 stats (Task/Project/Inbox/Reminder), widget reminder aktif conditional, dan seluruh pipeline reminder (schedule → scan → send → cancel) berfungsi. Scheduler `ScanDeadlines` sudah terdaftar di `routes/console.php`. Dogfooding harian penuh siap dimulai.
+- **Next Session:** FEAT-0007 — Kickoff EPIC-007 (Habit Tracking). Baca FSD Modul 7, Database Spec A.7, EPIC-007, pecah menjadi TASK granular.
+
 ---
 
-## Sesi — 2026-07-26 (Sesi 18)
+
 
 - **Target:** Menyelesaikan TASK-0017 — DashboardToday component, stats bar, today tasks aggregation, Habit placeholder, feature tests. Menyelesaikan EPIC-005.
 - **Ticket:** TASK-0017

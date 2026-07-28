@@ -4,15 +4,14 @@
 
 ## Tiket Aktif Saat Ini
 
-**ID:** FEAT-0006
-**Judul:** Kickoff EPIC Berikutnya (EPIC-006 Deadline Reminder atau EPIC-007 Habit Tracking)
-**File Lengkap:** *(belum dibuat — tentukan prioritas dulu dari PROJECT_CONTEXT.md)*
+**ID:** FEAT-0007
+**Judul:** Kickoff EPIC-007 (Habit Tracking) — Pemecahan Menjadi TASK
+**File Lengkap:** `tickets/features/FEAT-0007-kickoff-habit-tracking.md`
 **Status:** `To Do`
-
-> EPIC-005 (Dashboard) selesai penuh. Sebelum memulai sesi berikutnya, baca `docs/context/PROJECT_CONTEXT.md` untuk menentukan urutan EPIC yang benar: apakah EPIC-006 (Deadline Reminder) atau EPIC-007 (Habit Tracking) yang dikerjakan lebih dulu.
 
 ## Sebelum Mulai
 
-- [ ] Baca `docs/context/PROJECT_CONTEXT.md` — Sprint Map
-- [ ] Baca tiket EPIC-006 dan EPIC-007 untuk memahami scope + dependency masing-masing
-- [ ] Pilih EPIC yang lebih kecil atau lebih bebas dependency sebagai Sprint 7
+- [ ] Baca FSD Modul 7 — Habit Tracking
+- [ ] Baca Database Spec A.7 (tabel habits + habit_logs)
+- [ ] Baca EPIC-007 di `tickets/epics/EPIC-007-habit-tracking.md`
+- [ ] Pecah menjadi TASK granular mengikuti Coding Order

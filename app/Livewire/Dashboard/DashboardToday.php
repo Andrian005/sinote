@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Domain\Inbox\Models\InboxItem;
+use App\Domain\Notification\Models\Reminder;
 use App\Domain\Projects\Models\Project;
 use App\Domain\Tasks\Enums\TaskStatus;
 use App\Domain\Tasks\Models\Task;
@@ -54,6 +55,16 @@ class DashboardToday extends Component
         ];
     }
 
+    /**
+     * Count of pending reminders (scheduled + scheduled_at <= now) for the stats bar.
+     */
+    public function getRemindersCountProperty(): int
+    {
+        return Reminder::where('user_id', auth()->id())
+            ->pendingDelivery()
+            ->count();
+    }
+
     #[On('task-saved')]
     public function refreshOnTaskSaved(): void
     {
@@ -66,11 +77,18 @@ class DashboardToday extends Component
         unset($this->stats);
     }
 
+    #[On('reminder-updated')]
+    public function refreshOnReminderUpdated(): void
+    {
+        unset($this->remindersCount);
+    }
+
     public function render()
     {
         return view('livewire.dashboard.dashboard-today', [
             'todayTasks' => $this->todayTasks,
             'stats' => $this->stats,
+            'remindersCount' => $this->remindersCount,
         ]);
     }
 }

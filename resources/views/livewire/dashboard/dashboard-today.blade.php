@@ -1,6 +1,6 @@
 <div>
     {{-- Stats bar --}}
-    <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         <div class="bg-blue-50 rounded-lg p-4 text-center">
             <p class="text-2xl font-bold text-blue-700">{{ $stats['tasks'] }}</p>
             <p class="text-xs text-blue-500 mt-1 uppercase tracking-wide">Task Aktif</p>
@@ -13,7 +13,24 @@
             <p class="text-2xl font-bold text-amber-700">{{ $stats['inbox'] }}</p>
             <p class="text-xs text-amber-500 mt-1 uppercase tracking-wide">Di Inbox</p>
         </div>
+        <div class="bg-orange-50 rounded-lg p-4 text-center">
+            <p class="text-2xl font-bold text-orange-700">{{ $remindersCount }}</p>
+            <p class="text-xs text-orange-500 mt-1 uppercase tracking-wide">Reminder Aktif</p>
+        </div>
     </div>
+
+    {{-- Active Reminders widget --}}
+    @if ($remindersCount > 0)
+        <div class="bg-white shadow-sm sm:rounded-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Reminder Aktif</h3>
+                <span class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-orange-100 text-orange-700">
+                    {{ $remindersCount }} pending
+                </span>
+            </div>
+            <livewire:notification.reminder-list :limit="5" />
+        </div>
+    @endif
 
     {{-- Quick Capture --}}
     <div class="bg-white shadow-sm sm:rounded-lg p-6 mb-6">

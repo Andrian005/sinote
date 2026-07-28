@@ -14,6 +14,9 @@
 
 ## [Unreleased]
 
+- reminder: add ReminderList Livewire component, Dashboard stats bar (4th column), conditional reminder widget, ReminderListTest (8 tests) + DashboardTodayReminderTest (3 tests), ReminderSeeder — EPIC-006 complete, Milestone 1 done (TASK-0020)
+- reminder: add ReminderPolicy, ScheduleDeadlineReminder + CancelDeadlineReminder actions, ScanDeadlines + SendDeadlineReminder jobs, ProjectStatusChanged event, CancelRemindersOnTaskCompleted + CancelRemindersOnProjectStatusChanged listeners, 23 unit tests — 336 passed (459 assertions) (TASK-0019)
+- reminder: add notification_preferences + reminders migrations, ReminderType + ReminderStatus enums, Reminder + NotificationPreference models, UserObserver auto-create preference (TASK-0018)
 - dashboard: add DashboardToday Livewire component, stats bar, today tasks aggregation, 11 feature tests — EPIC-005 complete (TASK-0017)
 - dashboard: plan EPIC-005 sprint — create TASK-0017 ticket (FEAT-0005)
 - projects: add GoalForm + GoalList + ProjectForm + ProjectList Livewire components, /goals + /projects routes, dashboard widget, nav update, GoalSeeder + ProjectSeeder, 42 feature tests — EPIC-004 complete (TASK-0016)

@@ -15,6 +15,39 @@
 
 ---
 
+### EPIC-006 — Deadline Reminder (Lapisan Dasar Notifikasi)
+- Selesai: 2026-07-28
+- File: `tickets/epics/EPIC-006-deadline-reminder.md`
+- Catatan singkat: EPIC lengkap — 3 TASK (TASK-0018, TASK-0019, TASK-0020). Migration notification_preferences+reminders, 2 Enum, 2 Model, UserObserver. ReminderPolicy, ScheduleDeadlineReminder+CancelDeadlineReminder actions, ScanDeadlines+SendDeadlineReminder jobs, 2 listeners. ReminderList Livewire widget, Dashboard stats bar 4 kotak, ReminderSeeder. 347 tests (470 assertions) hijau. **Milestone 1 selesai — MVP v0.2.**
+
+### TASK-0020 — Livewire ReminderList, Dashboard Widget, Feature Tests, ReminderSeeder
+- Selesai: 2026-07-28
+- File: `tickets/tasks/TASK-0020-livewire-reminder-dashboard-tests-seeder.md`
+- Catatan singkat: ReminderList component (pendingDelivery scope, limit support, H/H-1 urgency badges, empty state), DashboardToday diperbarui (getRemindersCountProperty, #[On reminder-updated], stats bar 4 kolom + conditional widget), ReminderListTest (8 tests) + DashboardTodayReminderTest (3 tests), ReminderSeeder (3 scheduled + 2 sent); 347 total (470 assertions) hijau, pint clean.
+
+---
+
+### TASK-0019 — ReminderPolicy, Actions, Jobs, Event, Listeners, Unit Tests
+- Selesai: 2026-07-28
+- File: `tickets/tasks/TASK-0019-factory-policy-actions-jobs-reminder.md`
+- Catatan singkat: ReminderPolicy (view ownership), ScheduleDeadlineReminder (idempotent, H-1+H 08:00, skip H-1 if due today), CancelDeadlineReminder (bulk cancel scheduled), ScanDeadlines (scanner job harian 07:00, filter preference enabled), SendDeadlineReminder (guard isFinal, update sent+sent_at), ProjectStatusChanged event + dispatch dari UpdateProjectStatus, CancelRemindersOnTaskCompleted + CancelRemindersOnProjectStatusChanged listeners; 23 unit tests baru → 336 total (459 assertions) hijau, pint clean.
+
+---
+
+### TASK-0018 — Migrations reminders + notification_preferences, Enum ReminderType + ReminderStatus, Model Reminder + NotificationPreference
+- Selesai: 2026-07-28
+- File: `tickets/tasks/TASK-0018-migrations-models-reminder.md`
+- Catatan singkat: 2 migrations (notification_preferences pos-11: one-to-one user, cascade, no softDelete; reminders pos-12: polymorphic remindable, index status+scheduled_at, pgsql check constraints); Enum ReminderType (3 cases + label) + ReminderStatus (4 cases + isFinal + label); Model Reminder (4 scopes + morphTo) + NotificationPreference; UserObserver auto-create preference on User::created; ReminderFactory + NotificationPreferenceFactory; 313 tests hijau, pint clean.
+
+---
+
+### FEAT-0006 — Kickoff EPIC-006 (Deadline Reminder) — Pemecahan Menjadi TASK
+- Selesai: 2026-07-26
+- File: `tickets/features/FEAT-0006-kickoff-deadline-reminder.md`
+- Catatan singkat: EPIC-006 dipecah menjadi TASK-0018 (migrations notification_preferences+reminders pos 11+12, Enum ReminderType+ReminderStatus, Model+Observer), TASK-0019 (factory+policy+actions+jobs+unit tests), TASK-0020 (Livewire+feature tests+seeder+scheduler); NEXT_TASK.md diperbarui Sprint 7; TASK-0018 menjadi tiket aktif.
+
+---
+
 ### EPIC-005 — Dashboard / Today View
 - Selesai: 2026-07-26
 - File: `tickets/epics/EPIC-005-dashboard.md`

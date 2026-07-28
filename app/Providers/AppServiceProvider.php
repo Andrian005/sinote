@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Domain\Inbox\Contracts\CreatesTaskFromInbox;
 use App\Domain\Shared\Actions\AuthenticateUser;
+use App\Domain\Shared\Models\User;
+use App\Domain\Shared\Observers\UserObserver;
 use App\Domain\Tasks\Actions\CreateTaskFromInbox as CreateTaskFromInboxAction;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        User::observe(UserObserver::class);
+
         Fortify::authenticateUsing(function (Request $request) {
             $action = new AuthenticateUser;
 

@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
      * 1. UserSeeder (fondasi - dibutuhkan semua seeder lain)
      * 2. TagSeeder (independen, hanya butuh user)
      * 3. InboxItemSeeder (butuh user)
+     * 4. TaskSeeder (butuh user)
+     * 5. GoalSeeder (butuh user)
+     * 6. ProjectSeeder (butuh user + task)
+     * 7. ReminderSeeder (butuh user + task)
      */
     public function run(): void
     {
@@ -26,6 +30,7 @@ class DatabaseSeeder extends Seeder
             TaskSeeder::class,
             GoalSeeder::class,
             ProjectSeeder::class,
+            ReminderSeeder::class,
         ]);
     }
 }
